@@ -1,7 +1,11 @@
 package com.example.c19
 
+import java.util.*
+
 /**
  * Represents Global CVOID-19 Stats
+ *
+ * Note: all vals are immutable and are thus public
  *
  * @author Jeremy D. Jones
  * @property newConfirmed New confirmed cases today
@@ -20,5 +24,5 @@ data class GlobalCovid(
     val newRecovered: Int,
     val totalRecovered: Int
 ) {
-    val fetchedDate = java.util.Calendar.getInstance()
+    val fetchedDate: Calendar = Calendar.getInstance()
 }
