@@ -2,11 +2,15 @@ package com.example.c19
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.view.menu.MenuItemImpl
+import androidx.core.view.MenuCompat
+import androidx.core.view.MenuItemCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,5 +36,16 @@ class MainActivity : AppCompatActivity() {
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true)
         actionBarDrawerToggle.syncState()
 
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        if(item.getItemId() == R.id.home) {
+
+        }
+
+
+
+        return true
     }
 }
