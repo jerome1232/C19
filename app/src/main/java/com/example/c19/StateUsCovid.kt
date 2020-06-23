@@ -1,6 +1,8 @@
 package com.example.c19
 
 import com.google.gson.annotations.SerializedName
+import java.sql.Timestamp
+import java.util.*
 
 /**
  * Represents current day data for a US State
@@ -22,5 +24,6 @@ data class StateUsCovid(
     @SerializedName("todayDeaths")
     val newDeaths: Int,
     @SerializedName("deaths")
-    val totalDeaths: Int
+    val totalDeaths: Int,
+    val updated: Long
 )

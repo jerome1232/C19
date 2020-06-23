@@ -2,6 +2,7 @@ package com.example.c19
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 
 class MainActivity : AppCompatActivity() {
@@ -13,8 +14,10 @@ class MainActivity : AppCompatActivity() {
     /**
      * For Data Model Testing Purposes only
      **/
-    fun dataTest(view: View) {
-        val manager: CovidManager = CovidManager()
-        manager.fetchApi()
+    fun dataTest() {
+        val TAG = "MainActivity.dataTest()"
+        val manager = CovidManager()
+        val state = manager.getState("california")
+        Log.i(TAG, state.toString())
     }
 }

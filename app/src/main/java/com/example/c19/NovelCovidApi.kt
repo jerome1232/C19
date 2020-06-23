@@ -25,14 +25,12 @@ later.
 
 /*
 Here is where all the conversion happens.
-Note RxJava is doing work in the background
 */
     companion object {
         fun create(): NovelCovidApi {
             val retrofit = Retrofit.Builder()
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://corona.lmao.ninja/v2/states/")
+                .baseUrl("https://corona.lmao.ninja/v2/")
                 .build()
 
             return retrofit.create(NovelCovidApi::class.java)
