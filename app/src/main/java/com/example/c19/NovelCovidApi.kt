@@ -7,8 +7,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-//https://corona.lmao.ninja/v2/states/:states?yesterday=true
-
 /**
  * @author Jeremy D. Jones
  *
@@ -17,9 +15,11 @@ import retrofit2.http.Path
  *
  */
 interface NovelCovidApi {
-    // This adds the parameters on to the baseURL. In this case requesting a specific state.
-    // It returns a Call, this is something the retrofit library will convert to the data class
-    // later.
+/*
+This adds the parameters on to the baseURL. In this case requesting a specific state.
+It returns a Call, this is something the retrofit library will convert to the data class
+later.
+*/
     @GET("states/{state}")
     fun getState(@Path("state") key: String): Call<StateUsCovid>
 
