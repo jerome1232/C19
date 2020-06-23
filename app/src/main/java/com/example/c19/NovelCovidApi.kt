@@ -7,8 +7,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-//https://corona.lmao.ninja/v2/states/:states?yesterday=true
-
 /**
  * @author Jeremy D. Jones
  *
