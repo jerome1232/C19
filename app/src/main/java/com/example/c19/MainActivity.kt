@@ -4,8 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
+import com.example.c19.presenter.HomePresenterImpl
+import com.example.c19.view.HomeView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HomeView {
+    private val covidManager = CovidManager()
+    private val homePresenter = HomePresenterImpl(covidManager, this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -14,10 +20,13 @@ class MainActivity : AppCompatActivity() {
     /**
      * For Data Model Testing Purposes only
      **/
-    fun dataTest() {
+    fun dataTest(view: View) {
+        homePresenter.getStateData(state = "california")
+    }
+
+    override fun setStateData(stateUsCovid: StateUsCovid?) {
+        findViewById<TextView>(R.id.text).text = stateUsCovid.toString()
         val TAG = "MainActivity.dataTest()"
-        val manager = CovidManager()
-        val state = manager.getState("california")
-        Log.i(TAG, state.toString())
+        Log.i(TAG, stateUsCovid.toString())
     }
 }

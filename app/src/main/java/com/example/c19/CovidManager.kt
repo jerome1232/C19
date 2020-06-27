@@ -73,21 +73,15 @@ ha, that's irony
         val service = NovelCovidApi.create()
         val call = service.getState(state)
         Log.i(TAG, call.toString())
-        call.enqueue(object: Callback<StateUsCovid> {
-            override fun onResponse(call: Call<StateUsCovid>, response: Response<StateUsCovid>) {
-                Log.i(TAG, response.code().toString())
-                if (response.code() == 200) {
-                    val stateUsCovid = response.body()
-                    if (stateUsCovid != null) {
-                        Log.i(TAG, stateUsCovid.toString())
-                        states.add(stateUsCovid)
-                    }
-                }
+        val response = call.execute()
+        if (response.code() == 200) {
+            val stateUsCovid = response.body()
+            if (stateUsCovid != null) {
+                Log.i(TAG, stateUsCovid.toString())
+                states.add(stateUsCovid)
             }
-            override fun onFailure(call: Call<StateUsCovid>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-        })
+        }
+
         if (!states.isEmpty())
             return states.last()
         return null
