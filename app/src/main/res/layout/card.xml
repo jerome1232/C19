@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="334dp"
@@ -146,7 +147,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/body_divider3" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/totalCaseNum"
                 android:layout_width="wrap_content"
                 android:layout_height="29dp"
                 android:layout_marginStart="20dp"
@@ -158,7 +159,7 @@
                 app:layout_constraintStart_toEndOf="@+id/totalCases" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/activeCaseNum"
                 android:layout_width="wrap_content"
                 android:layout_height="29dp"
                 android:layout_marginStart="5dp"
@@ -170,7 +171,7 @@
                 app:layout_constraintStart_toEndOf="@+id/totalCases2" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/recoveredNum"
                 android:layout_width="wrap_content"
                 android:layout_height="29dp"
                 android:layout_marginStart="29dp"
@@ -182,7 +183,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/body_divider2" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/deathsNum"
                 android:layout_width="wrap_content"
                 android:layout_height="29dp"
                 android:layout_marginStart="28dp"
