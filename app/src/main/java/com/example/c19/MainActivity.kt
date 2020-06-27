@@ -1,23 +1,15 @@
 package com.example.c19
 
-import UICard.CardAdapter
-import UICard.CardModel
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.view.menu.MenuItemImpl
 import androidx.core.view.GravityCompat
-import androidx.core.view.MenuCompat
-import androidx.core.view.MenuItemCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_toolbar.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -25,7 +17,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var compareFragment: CompareFragment
     lateinit var historicalDataFragment: HistoricalDataFragment
     lateinit var settingsFragment: SettingsFragment
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,8 +54,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //        val fragmentTransaction : FragmentTransaction = fragmentManager.beginTransaction()
 //        fragmentTransaction.add(R.id.container_fragment, HomeFragment()) // Setting HomeFragment as default fragment
 //        fragmentTransaction.commit()
-
-
 
 
     }

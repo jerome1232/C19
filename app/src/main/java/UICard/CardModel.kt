@@ -2,11 +2,11 @@ package UICard
 
 class CardModel(val title : String, val numTotal : Int, val numActive : Int, val numRecover : Int, val numDeaths : Int ) {
 
-    private var cardTitle : String = title
-    private var totalCaseNum : Int = numTotal
-    private var activeCaseNum : Int = numActive
-    private var recoveredNum : Int = numRecover
-    private var deathsNum : Int = numDeaths
+    private val cardTitle : String = title
+    private val totalCaseNum : Int = numTotal
+    private val activeCaseNum : Int = numActive
+    private val recoveredNum : Int = numRecover
+    private val deathsNum : Int = numDeaths
 
 
     
