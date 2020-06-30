@@ -21,7 +21,7 @@ import java.util.Locale.ROOT
  *
  *
  */
-class CovidManager {
+class CovidStateManager {
     private val TAG = "CovidManager"
 
     // This is the kotlin variation of a static member variable
