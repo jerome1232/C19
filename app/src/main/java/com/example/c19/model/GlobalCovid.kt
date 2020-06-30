@@ -1,4 +1,4 @@
-package com.example.c19
+package com.example.c19.model
 
 import java.util.*
 

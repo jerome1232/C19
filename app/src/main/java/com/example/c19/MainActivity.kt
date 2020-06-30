@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import com.example.c19.model.CovidStateManager
+import com.example.c19.model.StateUsCovid
 import com.example.c19.presenter.HomePresenterImpl
 import com.example.c19.view.HomeView
 
 class MainActivity : AppCompatActivity(), HomeView {
-    private val covidManager = CovidManager()
-    private val homePresenter = HomePresenterImpl(covidManager, this)
+    private val covidStateManager = CovidStateManager()
+    private val homePresenter = HomePresenterImpl(covidStateManager, this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
