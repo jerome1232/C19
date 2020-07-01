@@ -1,7 +1,5 @@
 package com.example.c19.model
 
-import android.util.Log
-import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

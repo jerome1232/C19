@@ -33,10 +33,12 @@ class MainActivity : AppCompatActivity(), HomeView {
 //        homePresenter.getStateData(state = "california")
         val manager = CovidGlobalManager()
         doAsync {
-            val global = manager.getGlobal()
-            Log.i(TAG, global.toString())
+            val test = manager.getGlobal()
+            Log.i(TAG, test.toString())
             uiThread {
-                toast(global.toString())
+                if (test != null) {
+                    toast(test.global.newConfirmed.toString())
+                }
             }
         }
     }
