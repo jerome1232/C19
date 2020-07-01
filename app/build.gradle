@@ -36,5 +36,18 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
+    /**
+     * Custom Libraries added below
+     */
+    // gson library to work with json data: needed for data model
+    implementation 'com.google.code.gson:gson:2.8.5'
+    // retrofit libraries for making api calls: needed for data model
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    // added, the guide to adapt retrofit2 to kotlin from java used it
+    // it helps with asynchronous events, it lets me do fetching in the background
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    // Kotlin coroutines library
+    implementation "org.jetbrains.anko:anko-commons:0.10.4"
 }
