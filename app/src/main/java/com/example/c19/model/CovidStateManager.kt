@@ -19,7 +19,7 @@ import java.util.Locale.ROOT
  *
  */
 class CovidStateManager {
-    private val TAG = "CovidManager"
+    private val TAG = "CovidStateManager"
 
     // This is the kotlin variation of a static member variable
     companion object {
@@ -71,14 +71,11 @@ class CovidStateManager {
      */
     private fun apiStateFetch(state: String ): StateUsCovid? {
         Log.i(TAG, "Making request to get state California")
-        val service = NovelCovidApi.create()
+        val service = CovidStateApi.create()
         val call = service.getState(state)
         Log.i(TAG, call.toString())
         val response = call.execute()
-        if (response.code() == 200) {
-            val stateUsCovid = response.body()
-            return stateUsCovid
-        }
+        if (response.code() == 200) return response.body()
         return null
     }
 

@@ -1,5 +1,11 @@
 package com.example.c19.model
 
+import android.provider.Settings
+import android.util.Log
+import com.google.gson.*
+import com.google.gson.annotations.SerializedName
+import retrofit2.Response
+import java.lang.reflect.Type
 import java.util.*
 
 /**
@@ -18,12 +24,29 @@ import java.util.*
  * @property fetchedDate Datetime that data was fetched, this is calculated and not from api
  */
 data class GlobalCovid(
+    @SerializedName("NewConfirmed")
     val newConfirmed: Int,
+    @SerializedName("TotalConfirmed")
     val totalConfirmed: Int,
+    @SerializedName("NewDeaths")
     val newDeaths: Int,
+    @SerializedName("TotalDeaths")
     val totalDeaths: Int,
+    @SerializedName("NewRecovered")
     val newRecovered: Int,
+    @SerializedName("TotalRecovered")
     val totalRecovered: Int
-) {
-    val fetchedDate: Calendar = Calendar.getInstance()
+)
+
+class GlobalDeserializer : JsonDeserializer<GlobalCovid> {
+    override fun deserialize(
+        json: JsonElement?,
+        typeOfT: Type?,
+        context: JsonDeserializationContext?
+    ): GlobalCovid {
+        val content = json?.asJsonObject?.get("Global")?.asJsonObject
+        Log.i("deserial", content.toString())
+        return Gson().fromJson(content, GlobalCovid::class.java)
+    }
 }
+

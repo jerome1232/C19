@@ -5,14 +5,21 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import com.example.c19.model.CovidGlobalManager
 import com.example.c19.model.CovidStateManager
+import com.example.c19.model.GlobalCovid
 import com.example.c19.model.StateUsCovid
 import com.example.c19.presenter.HomePresenterImpl
 import com.example.c19.view.HomeView
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
+import kotlin.math.log
 
 class MainActivity : AppCompatActivity(), HomeView {
     private val covidStateManager = CovidStateManager()
     private val homePresenter = HomePresenterImpl(covidStateManager, this)
+    private val TAG = "mainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +30,15 @@ class MainActivity : AppCompatActivity(), HomeView {
      * For Data Model Testing Purposes only
      **/
     fun dataTest(view: View) {
-        homePresenter.getStateData(state = "california")
+//        homePresenter.getStateData(state = "california")
+        val manager = CovidGlobalManager()
+        doAsync {
+            val global = manager.getGlobal()
+            Log.i(TAG, global.toString())
+            uiThread {
+                toast(global.toString())
+            }
+        }
     }
 
     override fun setStateData(stateUsCovid: StateUsCovid?) {
