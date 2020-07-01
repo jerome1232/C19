@@ -1,4 +1,4 @@
-package com.example.c19
+package com.example.c19.model
 
 /**
  * Represents COVID-19 data for a single country

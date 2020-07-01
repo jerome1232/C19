@@ -1,9 +1,6 @@
-package com.example.c19
+package com.example.c19.model
 
 import android.util.Log
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.Locale.ROOT
 
 /**
@@ -21,20 +18,15 @@ import java.util.Locale.ROOT
  *
  *
  */
-class CovidManager {
-    private val TAG = "CovidManager"
+class CovidStateManager {
+    private val TAG = "CovidStateManager"
 
-/*
-This is the kotlin variation of a static member variable
-most things kotlin is more brief on, but something as simple as a static isn't
-ha, that's irony
-*/
+    // This is the kotlin variation of a static member variable
     companion object {
         var states = mutableListOf<StateUsCovid>()
     }
 
     /**
-     * TODO
      * This will be my main work horse and only public function.
      * Everything done in here right now, will be migrated out to
      * private functions and called from here.
@@ -43,13 +35,52 @@ ha, that's irony
      * @return returns null on failure, a StateUsCovid object on success
      */
     fun getState(state: String): StateUsCovid? {
-
         /**
          * TODO: If list is empty load from disk
          */
-
+        if (states.isEmpty()) {
+            loadFromDisk()
+        }
         // first search the list for a state
         // if a match is found, return it
+        var stateUsCovid = searchList(state)
+        if (stateUsCovid != null)
+            return stateUsCovid
+        // if no match was found, fetch data from the api
+        stateUsCovid = apiStateFetch(state)
+        if (stateUsCovid != null) {
+            states.add(stateUsCovid)
+            return stateUsCovid
+        }
+        return null
+    }
+
+    /**
+     * TODO Implement this
+     *
+     */
+    private fun loadFromDisk() {
+        // stub
+    }
+
+    /**
+     * apiStateFetch fetches data from the api
+     *
+     * @author Jeremy D. Jones
+     * @param state
+     */
+    private fun apiStateFetch(state: String ): StateUsCovid? {
+        Log.i(TAG, "Making request to get state California")
+        val service = CovidStateApi.create()
+        val call = service.getState(state)
+        Log.i(TAG, call.toString())
+        val response = call.execute()
+        if (response.code() == 200) return response.body()
+        return null
+    }
+
+    private fun searchList(state: String ): StateUsCovid? {
+
         for (item in states) {
             Log.i(TAG, "Searching for " + state)
             if (item.state.toLowerCase(ROOT) == state.toLowerCase(ROOT)) {
@@ -63,38 +94,6 @@ ha, that's irony
                 return item
             }
         }
-        /**
-         * If we get here, no match was found, we need to request one from the API
-         * I want to put this in it's own function, but had issues converting.
-         * for now it remains here so we have something that works.
-         * TODO: Implement API call in own private function
-         **/
-        Log.i(TAG, "Making request to get state California")
-        val service = NovelCovidApi.create()
-        val call = service.getState(state)
-        Log.i(TAG, call.toString())
-        val response = call.execute()
-        if (response.code() == 200) {
-            val stateUsCovid = response.body()
-            if (stateUsCovid != null) {
-                Log.i(TAG, stateUsCovid.toString())
-                states.add(stateUsCovid)
-            }
-        }
-
-        if (!states.isEmpty())
-            return states.last()
-        return null
-    }
-
-    /**
-     * TODO Api call will be migrated to this function
-     *
-     * @param state
-     */
-    private fun apiStateFetch(state: String ) {
-        /**
-         * TODO: Implement API call here, getState() will get cleaned up to a series of functions
-         */
+    return null
     }
 }

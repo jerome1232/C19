@@ -1,4 +1,4 @@
-package com.example.c19
+package com.example.c19.model
 
 /**
  * Represents a countries stats from day one to current
