@@ -2,6 +2,12 @@ package com.example.c19.model
 
 import android.util.Log
 
+/**
+ * A manager to control Global Covid 19 data
+ *
+ * @author Jeremy Jones
+ *
+ */
 class CovidGlobalManager {
     private val TAG = "CovidGlobalManager"
 
