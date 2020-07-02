@@ -9,8 +9,7 @@ import retrofit2.http.Path
 /**
  * @author Jeremy D. Jones
  *
- * This is an interface to facilitate reaching out to
- * the various API's.
+ * This is an interface to fetch data for state API
  *
  */
 interface CovidStateApi {
