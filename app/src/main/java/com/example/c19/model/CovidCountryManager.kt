@@ -1,6 +1,8 @@
 package com.example.c19.model
 
 import android.util.Log
+import java.util.*
+import java.util.Locale.ROOT
 
 class CovidCountryManager {
     private val TAG = "CovidCountryManager"
@@ -39,7 +41,18 @@ class CovidCountryManager {
     }
 
     private fun searchList(country: String): CountryCovid? {
-        TODO("Not yet implemented")
+        Log.i(TAG, "Searching for $country")
+        for (item in countries) {
+            if (item.country.toLowerCase(ROOT) == country.toLowerCase(ROOT)) {
+                Log.i(TAG, "$country found")
+                Log.i(TAG, item.toString())
+                /**
+                 * TODO: Check timestamp to see if data is super fresh
+                 */
+                return item
+            }
+        }
+        return null
     }
 
     private fun loadFromDisk() {
