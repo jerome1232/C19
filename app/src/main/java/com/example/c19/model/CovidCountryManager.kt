@@ -56,6 +56,6 @@ class CovidCountryManager {
     }
 
     private fun loadFromDisk() {
-        TODO("Not yet implemented")
+        // stub
     }
 }
