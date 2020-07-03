@@ -1,7 +1,6 @@
 package com.example.c19.model
 
 import android.util.Log
-import java.util.*
 import java.util.Locale.ROOT
 
 class CovidCountryManager {
@@ -11,7 +10,14 @@ class CovidCountryManager {
         var countries = mutableListOf<CountryCovid>()
     }
 
-
+    /**
+     * Retrieves a country
+     *
+     * @author Jeremy D. Jones
+     *
+     * @param country
+     * @return
+     */
     fun getCountry(country: String): CountryCovid? {
         /**
          * TODO If list is empty load from disk
@@ -30,6 +36,14 @@ class CovidCountryManager {
         return null
     }
 
+    /**
+     * Fetches a country from API
+     *
+     * @author Jeremy D. Jones
+     *
+     * @param country
+     * @return
+     */
     private fun apiCountryFetch(country: String): CountryCovid? {
         Log.i(TAG, "Making request to get $country")
         val service = CovidCountryApi.create()
@@ -40,6 +54,14 @@ class CovidCountryManager {
         return null
     }
 
+    /**
+     * Searches memory for a country
+     *
+     * @author Jeremy D. Jones
+     *
+     * @param country
+     * @return
+     */
     private fun searchList(country: String): CountryCovid? {
         Log.i(TAG, "Searching for $country")
         for (item in countries) {
@@ -55,6 +77,10 @@ class CovidCountryManager {
         return null
     }
 
+    /**
+     * TODO Implement loadFromDisk function
+     *
+     */
     private fun loadFromDisk() {
         // stub
     }
