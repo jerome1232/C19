@@ -88,9 +88,8 @@ class CovidStateManager {
      * @return
      */
     private fun searchList(state: String ): StateUsCovid? {
-
+        Log.i(TAG, "Searching for $state")
         for (item in states) {
-            Log.i(TAG, "Searching for $state")
             if (item.state.toLowerCase(ROOT) == state.toLowerCase(ROOT)) {
                 Log.i(TAG, "$state found")
                 Log.i(TAG, item.toString())
