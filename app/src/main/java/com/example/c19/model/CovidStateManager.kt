@@ -79,6 +79,14 @@ class CovidStateManager {
         return null
     }
 
+    /**
+     * searches list for a given state
+     *
+     * @author Jeremy D. Jones
+     *
+     * @param state
+     * @return
+     */
     private fun searchList(state: String ): StateUsCovid? {
 
         for (item in states) {
