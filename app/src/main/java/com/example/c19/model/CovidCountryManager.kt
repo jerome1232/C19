@@ -50,6 +50,7 @@ class CovidCountryManager {
         val call = service.getCountry(country)
         Log.i(TAG, call.toString())
         val response = call.execute()
+        Log.i(TAG, "Response code: ${response.code()}")
         if (response.code() == 200) return response.body()
         return null
     }
@@ -74,6 +75,7 @@ class CovidCountryManager {
                 return item
             }
         }
+        Log.i(TAG, "Nothing found")
         return null
     }
 

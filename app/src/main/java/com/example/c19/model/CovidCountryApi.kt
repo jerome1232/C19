@@ -8,7 +8,7 @@ import retrofit2.http.Path
 
 interface CovidCountryApi {
 
-    @GET("{country}?yesterday=true&strict=true")
+    @GET("countries/{country}?yesterday=true&strict=true")
     fun getCountry(@Path("country") key: String): Call<CountryCovid>
 
     companion object {

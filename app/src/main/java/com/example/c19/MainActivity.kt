@@ -2,14 +2,20 @@ package com.example.c19
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager.widget.ViewPager
+import com.example.c19.model.CovidCountryManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_toolbar.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -111,5 +117,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
     }
+
+    /**
+     * TODO REMOVE ME AT WILL
+     *
+     * I'm just here for testing
+     *
+     * @param view
+     */
+    fun dataCountryTest(view: View) {
+        doAsync {
+            val manager = CovidCountryManager()
+            val country = manager.getCountry("bolivia")
+            Log.i("dataTest", country.toString())
+            uiThread {
+                Log.i("dataTest", country.toString())
+            }
+        }
+    }
+
 
 }
