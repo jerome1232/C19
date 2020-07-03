@@ -70,7 +70,7 @@ class CovidStateManager {
      * @param state
      */
     private fun apiStateFetch(state: String ): StateUsCovid? {
-        Log.i(TAG, "Making request to get state California")
+        Log.i(TAG, "Making request to get $state")
         val service = CovidStateApi.create()
         val call = service.getState(state)
         Log.i(TAG, call.toString())
