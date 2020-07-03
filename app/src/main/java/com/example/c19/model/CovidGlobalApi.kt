@@ -5,6 +5,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
+/**
+ * Interface to fetch global Covid 19 data from api
+ *
+ */
 interface CovidGlobalApi {
     @GET("summary")
     fun getGlobal(): Call<GlobalCovidSummary>

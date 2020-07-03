@@ -70,7 +70,7 @@ class CovidStateManager {
      * @param state
      */
     private fun apiStateFetch(state: String ): StateUsCovid? {
-        Log.i(TAG, "Making request to get state California")
+        Log.i(TAG, "Making request to get $state")
         val service = CovidStateApi.create()
         val call = service.getState(state)
         Log.i(TAG, call.toString())
@@ -79,12 +79,19 @@ class CovidStateManager {
         return null
     }
 
+    /**
+     * searches list for a given state
+     *
+     * @author Jeremy D. Jones
+     *
+     * @param state
+     * @return
+     */
     private fun searchList(state: String ): StateUsCovid? {
-
+        Log.i(TAG, "Searching for $state")
         for (item in states) {
-            Log.i(TAG, "Searching for " + state)
             if (item.state.toLowerCase(ROOT) == state.toLowerCase(ROOT)) {
-                Log.i(TAG, state + " found")
+                Log.i(TAG, "$state found")
                 Log.i(TAG, item.toString())
                 /**
                  * TODO: Check timestamp to see if data is super fresh

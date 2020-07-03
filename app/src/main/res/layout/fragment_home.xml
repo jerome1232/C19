@@ -28,6 +28,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="110dp"
         android:background="@color/colorPrimary"
+        android:onClick="dataCountryTest"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:text="Update"
