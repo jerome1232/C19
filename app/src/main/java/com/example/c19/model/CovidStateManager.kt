@@ -84,7 +84,7 @@ class CovidStateManager {
         for (item in states) {
             Log.i(TAG, "Searching for $state")
             if (item.state.toLowerCase(ROOT) == state.toLowerCase(ROOT)) {
-                Log.i(TAG, state + " found")
+                Log.i(TAG, "$state found")
                 Log.i(TAG, item.toString())
                 /**
                  * TODO: Check timestamp to see if data is super fresh
