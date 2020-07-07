@@ -14,11 +14,10 @@ import com.google.gson.annotations.SerializedName
  * @property deaths
  */
 data class StateUsCovidHistorical(
-    val date: Int,
+    val date: String,
     val state: String,
-    @SerializedName("positive")
+    @SerializedName("cases")
     val confirmed: Int,
-    val recovered: Int,
-    @SerializedName("death")
+    @SerializedName("deaths")
     val deaths: Int
 )
