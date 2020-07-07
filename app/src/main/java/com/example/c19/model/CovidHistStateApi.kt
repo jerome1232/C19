@@ -6,23 +6,22 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 /**
- * Interface to fetch global Covid 19 data from api
+ * Interface to fetch historical data for US states
  *
  * @author Jeremy D. Jones
  *
  */
-interface CovidGlobalApi {
-    @GET("summary")
-    fun getGlobal(): Call<GlobalCovidSummary>
-
+interface CovidHistStateApi {
+    @GET("nyt/states?state")
+    fun getHistState(): Call<StateUsCovidHistorical>
 
     companion object {
-        fun create(): CovidGlobalApi {
+        fun create(): CovidHistStateApi {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://api.covid19api.com/")
+                .baseUrl("https://corona.lmao.ninja/")
                 .build()
-            return  retrofit.create(CovidGlobalApi::class.java)
+            return retrofit.create(CovidHistStateApi::class.java)
         }
     }
 }
