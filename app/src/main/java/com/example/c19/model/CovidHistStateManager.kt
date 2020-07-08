@@ -14,7 +14,7 @@ class CovidHistStateManager {
             }
         
         state = searchList(stateName)
-        if (!state.isEmpty()) return state
+        if (state.isNotEmpty()) return state
         state = apiFetch(stateName)
         return mutableListOf<StateUsCovidHistorical>()
     }
