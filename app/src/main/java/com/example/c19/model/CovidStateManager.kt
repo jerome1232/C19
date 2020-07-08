@@ -24,6 +24,7 @@ class CovidStateManager {
     // This is the kotlin variation of a static member variable
     private var states = mutableListOf<StateUsCovid>()
     private var countries = mutableListOf<CountryCovid>()
+    private var entities = mutableListOf<CovidEntity>()
 
     /**
      * This will be my main work horse and only public function.
