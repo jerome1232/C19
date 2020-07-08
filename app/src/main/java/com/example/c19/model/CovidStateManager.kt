@@ -22,9 +22,8 @@ class CovidStateManager {
     private val TAG = "CovidStateManager"
 
     // This is the kotlin variation of a static member variable
-    companion object {
-        var states = mutableListOf<StateUsCovid>()
-    }
+    private var states = mutableListOf<StateUsCovid>()
+    private var countries = mutableListOf<CountryCovid>()
 
     /**
      * This will be my main work horse and only public function.
