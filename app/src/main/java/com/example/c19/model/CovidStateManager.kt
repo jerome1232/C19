@@ -18,7 +18,7 @@ import java.util.Locale.ROOT
  *
  *
  */
-class CovidStateManager {
+class CovidManager {
     private val TAG = "CovidStateManager"
 
     // This is the kotlin variation of a static member variable
@@ -50,6 +50,7 @@ class CovidStateManager {
         stateUsCovid = apiStateFetch(state)
         if (stateUsCovid != null) {
             states.add(stateUsCovid)
+            entities.add(stateUsCovid)
             return stateUsCovid
         }
         return null
