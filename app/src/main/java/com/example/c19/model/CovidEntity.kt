@@ -2,6 +2,13 @@ package com.example.c19.model
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * This class represents a generic
+ * covid 19 data entity
+ *
+ * @author Jeremy D. Jones
+ *
+ */
 abstract class CovidEntity {
     abstract val newConfirmed: Int
     abstract val totalConfirmed: Int
@@ -9,6 +16,19 @@ abstract class CovidEntity {
     abstract val totalDeaths: Int
 }
 
+/**
+ * Represents Covid 19 data for a country
+ *
+ * @author Jeremy D. Jones
+ * @property country
+ * @property date
+ * @property newConfirmed
+ * @property totalConfirmed
+ * @property newDeaths
+ * @property totalDeaths
+ * @property newRecovered
+ * @property totalRecovered
+ */
 data class CountryCovid(
     val country: String,
     @SerializedName("updated")
@@ -27,6 +47,17 @@ data class CountryCovid(
     val totalRecovered: Int
     ) : CovidEntity()
 
+/**
+ * Represents Covid 19 data for a state
+ *
+ * @author Jeremy D. Jones
+ * @property state
+ * @property newConfirmed
+ * @property totalConfirmed
+ * @property newDeaths
+ * @property totalDeaths
+ * @property date
+ */
 data class StateUsCovid(
     val state: String,
     @SerializedName("todayCases")
@@ -40,3 +71,30 @@ data class StateUsCovid(
     @SerializedName("updated")
     val date: Long
     ) : CovidEntity()
+
+/**
+ * Represents Global Covid 19 Stats
+ *
+ * @author Jeremy D. Jones
+ * @property newConfirmed New confirmed cases today
+ * @property totalConfirmed Total confirmed cases
+ * @property newDeaths New deaths attributed to COVID-19 today
+ * @property totalDeaths Total deaths attributed to COVID-19
+ * @property newRecovered People that have recovered from COVID-19 Today
+ * @property totalRecovered Total people that have recovered from COVID-19
+ * @property fetchedDate Datetime that data was fetched, this is calculated and not from api
+ */
+data class GlobalCovid(
+    @SerializedName("NewConfirmed")
+    override val newConfirmed: Int,
+    @SerializedName("TotalConfirmed")
+    override val totalConfirmed: Int,
+    @SerializedName("NewDeaths")
+    override val newDeaths: Int,
+    @SerializedName("TotalDeaths")
+    override val totalDeaths: Int,
+    @SerializedName("NewRecovered")
+    val newRecovered: Int,
+    @SerializedName("TotalRecovered")
+    val totalRecovered: Int
+) : CovidEntity()

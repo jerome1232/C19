@@ -1,12 +1,13 @@
 package com.example.c19.presenter
 
-import com.example.c19.model.CovidStateManager
+import com.example.c19.model.CovidManager
+import com.example.c19.model.StateUsCovid
 import com.example.c19.view.HomeView
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class HomePresenterImpl(covidManager: CovidStateManager, homeView: HomeView) : HomePresenter {
-    private val _covidStateManager: CovidStateManager = covidManager
+class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePresenter {
+    private val _covidStateManager: CovidManager = covidManager
     private val _homeView: HomeView = homeView
 
     override fun getStateData(state: String) {
@@ -14,7 +15,7 @@ class HomePresenterImpl(covidManager: CovidStateManager, homeView: HomeView) : H
             val stateData = _covidStateManager.getState(state)
             println(stateData)
             uiThread {
-                _homeView.setStateData(stateData)
+                _homeView.setStateData(stateData as StateUsCovid?)
             }
         }
     }

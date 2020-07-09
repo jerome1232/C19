@@ -10,6 +10,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager.widget.ViewPager
 import com.example.c19.model.CovidCountryManager
+import com.example.c19.model.CovidManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_toolbar.*
@@ -127,8 +128,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      */
     fun dataCountryTest(view: View) {
         doAsync {
-            val manager = CovidCountryManager()
-            val country = manager.getCountry("bolivia")
+            val manager = CovidManager()
+            val country = manager.getState("Idaho")
             Log.i("dataTest", country.toString())
             uiThread {
                 Log.i("dataTest", country.toString())
