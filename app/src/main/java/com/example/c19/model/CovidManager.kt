@@ -1,7 +1,10 @@
 package com.example.c19.model
 
 import android.util.Log
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Locale.ROOT
+import kotlin.jvm.java as java1
 
 /**
  *  CovidManager, this is a tool that manages StateUsCovid data
@@ -70,7 +73,11 @@ class CovidManager {
      */
     private fun apiStateFetch(state: String ): StateUsCovid? {
         Log.i(TAG, "Making request to get $state")
-        val service = CovidStateApi.create()
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://corona.lmao.ninja/v2/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val service = retrofit.create(CovidApi::class.java1)
         val call = service.getState(state)
         Log.i(TAG, call.toString())
         val response = call.execute()
