@@ -55,12 +55,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
 
-
-        // Logic for loading the default fragment upon app opening
-//        val fragmentManager : FragmentManager = getSupportFragmentManager()
-//        val fragmentTransaction : FragmentTransaction = fragmentManager.beginTransaction()
-//        fragmentTransaction.add(R.id.container_fragment, HomeFragment()) // Setting HomeFragment as default fragment
-//        fragmentTransaction.commit()
+        
 
 
     }
