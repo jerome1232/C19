@@ -23,8 +23,10 @@ class CovidManager {
     private val TAG = "CovidManager"
 
     // keeping independent lists for states and countries.
-    private var states = mutableListOf<StateUsCovid>()
-    private var countries = mutableListOf<CountryCovid>()
+    companion object {
+        private var states = mutableListOf<StateUsCovid>()
+        private var countries = mutableListOf<CountryCovid>()
+    }
 
     /**
      * Retrieves global summary stats

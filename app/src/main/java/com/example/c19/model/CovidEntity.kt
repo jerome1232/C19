@@ -44,8 +44,13 @@ data class CountryCovid(
     @SerializedName("todayRecovered")
     val newRecovered: Int,
     @SerializedName("recovered")
-    val totalRecovered: Int
+    val totalRecovered: Int,
+    val countryInfo: CountryInfo
     ) : CovidEntity()
+
+data class CountryInfo(
+    val flag: String
+)
 
 /**
  * Represents Covid 19 data for a state
