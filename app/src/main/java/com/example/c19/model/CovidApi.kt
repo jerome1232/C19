@@ -21,4 +21,9 @@ later.
     @GET("states/{state}")
     fun getState(@Path("state") key: String): Call<StateUsCovid>
 
+    @GET("countries/{country}?yesterday=true&strict=true")
+    fun getCountry(@Path("country") key: String): Call<CountryCovid>
+
+    @GET("summary")
+    fun getGlobal(): Call<GlobalCovidSummary>
 }

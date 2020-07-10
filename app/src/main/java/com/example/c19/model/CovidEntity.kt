@@ -82,7 +82,6 @@ data class StateUsCovid(
  * @property totalDeaths Total deaths attributed to COVID-19
  * @property newRecovered People that have recovered from COVID-19 Today
  * @property totalRecovered Total people that have recovered from COVID-19
- * @property fetchedDate Datetime that data was fetched, this is calculated and not from api
  */
 data class GlobalCovid(
     @SerializedName("NewConfirmed")
@@ -97,4 +96,26 @@ data class GlobalCovid(
     val newRecovered: Int,
     @SerializedName("TotalRecovered")
     val totalRecovered: Int
+) : CovidEntity()
+
+/**
+ * Simple data class to hold Global Covid 19 data
+ *
+ * @author Jeremy Jones
+ *
+ * @property global
+ * @property data
+ */
+data class GlobalCovidSummary (
+    // these aren't really used...
+    // they are just here to satisfy inheritance
+    override val newConfirmed: Int,
+    override val totalConfirmed: Int,
+    override val newDeaths: Int,
+    override val totalDeaths: Int,
+    // The real stuff
+    @SerializedName("Global")
+    val global: GlobalCovid,
+    @SerializedName("Date")
+    val data: String
 ) : CovidEntity()

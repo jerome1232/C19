@@ -12,7 +12,7 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
 
     override fun getStateData(state: String) {
         doAsync {
-            val stateData = _covidStateManager.getState(state)
+            val stateData = _covidStateManager.getEntity(state)
             println(stateData)
             uiThread {
                 _homeView.setStateData(stateData as StateUsCovid?)

@@ -10,8 +10,6 @@ import retrofit2.http.GET
  *
  */
 interface CovidGlobalApi {
-    @GET("summary")
-    fun getGlobal(): Call<GlobalCovidSummary>
 
 
     companion object {

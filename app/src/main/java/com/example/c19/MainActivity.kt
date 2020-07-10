@@ -9,7 +9,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager.widget.ViewPager
-import com.example.c19.model.CovidCountryManager
 import com.example.c19.model.CovidManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -127,12 +126,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      * @param view
      */
     fun dataCountryTest(view: View) {
+        val manager = CovidManager()
         doAsync {
-            val manager = CovidManager()
-            val country = manager.getState("Idaho")
-            Log.i("dataTest", country.toString())
+            val country = manager.getEntity("Bolivia")
             uiThread {
                 Log.i("dataTest", country.toString())
+            }
+        }
+        doAsync {
+            val state = manager.getEntity("Idaho")
+            uiThread {
+                Log.i("dataTest", state.toString())
+            }
+        }
+        doAsync {
+            val globalStats = manager.getGlobal()
+            uiThread {
+                Log.i("dataTest", globalStats.toString())
             }
         }
     }
