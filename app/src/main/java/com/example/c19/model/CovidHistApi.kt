@@ -11,17 +11,17 @@ import retrofit2.http.GET
  * @author Jeremy D. Jones
  *
  */
-interface CovidHistStateApi {
+interface CovidHistApi {
     @GET("nyt/states?state")
     fun getHistState(): Call<StateUsCovidHistorical>
 
     companion object {
-        fun create(): CovidHistStateApi {
+        fun create(): CovidHistApi {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl("https://corona.lmao.ninja/")
                 .build()
-            return retrofit.create(CovidHistStateApi::class.java)
+            return retrofit.create(CovidHistApi::class.java)
         }
     }
 }
