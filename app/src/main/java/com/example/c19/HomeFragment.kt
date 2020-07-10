@@ -13,7 +13,8 @@ import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-import com.example.c19.model.CovidCountryManager
+import com.example.c19.model.CovidManager
+//import com.example.c19.model.CovidCountryManager
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
@@ -90,8 +91,8 @@ class HomeFragment : Fragment() {
      */
     fun dataCountryTest(view: View) {
         doAsync {
-            val manager = CovidCountryManager()
-            val country = manager.getCountry("bolivia")
+            val manager = CovidManager()
+            val country = manager.getEntity("bolivia")
             uiThread {
                 Log.i("dataTest", country.toString())
             }
