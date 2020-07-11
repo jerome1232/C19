@@ -14,11 +14,8 @@ import kotlin.jvm.java as java1
  *
  *  @author Jeremy D. Jones
  *
- * TODO: Implement items on a function basis
  * TODO: Add disk load if list is empty
  * TODO: Check timestamp to see if we need to attempt to refresh data
- * TODO: Cleanup
- *
  *
  */
 class CovidManager {
@@ -38,7 +35,6 @@ class CovidManager {
      * @return
      */
     fun getGlobal() : CovidEntity? {
-        val TAG = "getGlobal"
         return apiGlobalFetch()
     }
 
@@ -169,7 +165,7 @@ class CovidManager {
     private fun searchStateList(state: String ): StateUsCovid? {
         Log.i(TAG, "Searching for $state")
         for (item in states) {
-            if (item.state.toLowerCase(ROOT) == state.toLowerCase(ROOT)) {
+            if (item.name.toLowerCase(ROOT) == state.toLowerCase(ROOT)) {
                 Log.i(TAG, "$state found")
                 Log.i(TAG, item.toString())
                 /**
@@ -215,7 +211,7 @@ class CovidManager {
     private fun searchCountryList(country: String): CountryCovid? {
         Log.i(TAG, "Searching for $country")
         for (item in countries) {
-            if (item.country.toLowerCase(ROOT) == country.toLowerCase(ROOT)) {
+            if (item.name.toLowerCase(ROOT) == country.toLowerCase(ROOT)) {
                 Log.i(TAG, "$country found")
                 Log.i(TAG, item.toString())
                 /**
