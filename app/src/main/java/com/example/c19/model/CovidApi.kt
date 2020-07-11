@@ -26,4 +26,7 @@ later.
 
     @GET("summary")
     fun getGlobal(): Call<GlobalCovid>
+
+    @GET("/total/dayone/country/{country}")
+    fun getHistCountry(@Path("country") key: String): Call<CovidHistCountry>
 }
