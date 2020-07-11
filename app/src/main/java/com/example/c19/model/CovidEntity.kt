@@ -1,6 +1,10 @@
 package com.example.c19.model
 
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
 import com.google.gson.annotations.SerializedName
+import java.lang.reflect.Type
 
 /**
  * This class represents a generic
@@ -100,8 +104,10 @@ data class GlobalCovid(
     @SerializedName("NewRecovered")
     val newRecovered: Int,
     @SerializedName("TotalRecovered")
-    val totalRecovered: Int
-) : CovidEntity()
+    val totalRecovered: Int,
+    @SerializedName("Date")
+    val date: String
+): CovidEntity()
 
 /**
  * Simple data class to hold Global Covid 19 data
@@ -112,15 +118,42 @@ data class GlobalCovid(
  * @property data
  */
 data class GlobalCovidSummary (
-    // these aren't really used...
-    // they are just here to satisfy inheritance
-    override val newConfirmed: Int,
-    override val totalConfirmed: Int,
-    override val newDeaths: Int,
-    override val totalDeaths: Int,
-    // The real stuff
+
     @SerializedName("Global")
     val global: GlobalCovid,
     @SerializedName("Date")
     val data: String
-) : CovidEntity()
+)
+
+/**
+ * Custom builds a GlobalCovid object to more closely
+ * resemble other data types.
+ *
+ * @author Jeremy D. Jones
+ *
+ */
+class GlobalDeserializer: JsonDeserializer<GlobalCovid> {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type?,
+        context: JsonDeserializationContext?
+    ): GlobalCovid {
+        val jsonObject = json.asJsonObject
+
+        /*
+        I know, I used single letter variables here
+        but their purpose should be clear based on the
+        key they are being retrieved from.
+        */
+        val d = jsonObject.get("Date").asString
+        val g = jsonObject.get("Global").asJsonObject
+        val nc = g.get("NewConfirmed").asInt
+        val tc = g.get("TotalConfirmed").asInt
+        val nd = g.get("NewDeaths").asInt
+        val td = g.get("TotalDeaths").asInt
+        val nr = g.get("NewRecovered").asInt
+        val tr = g.get("TotalRecovered").asInt
+
+        return GlobalCovid(nc, tc, nd, td, nr, tr, d)
+    }
+}

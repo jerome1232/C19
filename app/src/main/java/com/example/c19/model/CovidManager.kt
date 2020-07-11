@@ -1,6 +1,8 @@
 package com.example.c19.model
 
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Locale.ROOT
@@ -37,17 +39,7 @@ class CovidManager {
      */
     fun getGlobal() : CovidEntity? {
         val TAG = "getGlobal"
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.covid19api.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val service = retrofit.create(CovidApi::class.java1)
-        val call = service.getGlobal()
-        val response = call.execute()
-        Log.i(TAG, "Response: ${response.code().toString()}")
-        Log.i(TAG, response.body().toString())
-        if (response.code() == 200) return response.body()
-        return null
+        return apiGlobalFetch()
     }
 
     /**
@@ -123,6 +115,22 @@ class CovidManager {
         return null
     }
 
+    private fun apiGlobalFetch(): GlobalCovid? {
+        val customGson = GsonBuilder()
+            .registerTypeAdapter(GlobalCovid::class.java1, GlobalDeserializer())
+            .create()
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.covid19api.com/")
+            .addConverterFactory(GsonConverterFactory.create(customGson))
+            .build()
+        val service = retrofit.create(CovidApi::class.java1)
+        val call = service.getGlobal()
+        val response = call.execute()
+        Log.i(TAG, "Response: ${response.code().toString()}")
+        Log.i(TAG, response.body().toString())
+        if (response.code() == 200) return response.body()
+        return null
+    }
     /**
      * TODO Implement this
      *
