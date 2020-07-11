@@ -25,5 +25,5 @@ later.
     fun getCountry(@Path("country") key: String): Call<CountryCovid>
 
     @GET("summary")
-    fun getGlobal(): Call<GlobalCovidSummary>
+    fun getGlobal(): Call<GlobalCovid>
 }

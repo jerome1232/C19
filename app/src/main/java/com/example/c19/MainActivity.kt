@@ -9,7 +9,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager.widget.ViewPager
+import com.example.c19.model.CountryCovid
 import com.example.c19.model.CovidManager
+import com.example.c19.model.GlobalCovid
+import com.example.c19.model.StateUsCovid
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_toolbar.*
@@ -130,18 +133,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         doAsync {
             val country = manager.getEntity("Bolivia")
             uiThread {
+                if (country is CountryCovid) {
+                    println(country.country)
+                }
                 Log.i("dataTest", country.toString())
             }
         }
         doAsync {
             val state = manager.getEntity("Idaho")
             uiThread {
+                if (state is StateUsCovid) {
+                    println(state.state)
+                }
                 Log.i("dataTest", state.toString())
             }
         }
         doAsync {
             val globalStats = manager.getGlobal()
             uiThread {
+                if (globalStats is GlobalCovid) {
+                    Log.i("dataTest", globalStats.newRecovered.toString())
+                }
                 Log.i("dataTest", globalStats.toString())
             }
         }
