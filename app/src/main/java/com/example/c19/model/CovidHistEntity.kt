@@ -3,7 +3,13 @@ package com.example.c19.model
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-
+/**
+ * A generic class to represent
+ * historical covid 19 data
+ *
+ * @author Jeremy D. Jones
+ *
+ */
 abstract class CovidHistEntity {
     abstract val name: String
     abstract val confirmed: Int
@@ -19,6 +25,16 @@ abstract class CovidHistEntity {
 // val date : String
 
 // https://corona.lmao.ninja/v2/nyt/states?state
+/**
+ * Represents Historical data for US States
+ *
+ * @author Jeremy D. Jones
+ *
+ * @property name
+ * @property confirmed
+ * @property deaths
+ * @property date
+ */
 data class CovidHistState(
     @SerializedName("state")
     override val name: String,
@@ -29,6 +45,16 @@ data class CovidHistState(
 ) : CovidHistEntity()
 
 // https://api.covid19api.com/total/dayone/country/:country
+/**
+ * Represents Historical data of Countries
+ *
+ * @author Jeremy D. Jones
+ *
+ * @property name
+ * @property confirmed
+ * @property deaths
+ * @property date
+ */
 data class CovidHistCountry(
     @SerializedName("Country")
     override val name: String,
