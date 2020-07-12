@@ -7,6 +7,8 @@ import com.example.c19.model.StateUsCovid
 import com.example.c19.view.HomeView
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Converts the retrieved data from the model to an map object understandable by the view, then
@@ -31,7 +33,7 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
                 if (covidEntity is GlobalCovid) {
                     val covidEntityAsMap = mapOf<String, Any?>(
                         "title" to "Global",
-                        "Date:" to covidEntity.date,
+                        "Date:" to covidEntity.date.substring(0, 10),
                         "New confirmed:" to covidEntity.newConfirmed,
                         "New recovered:" to covidEntity.newRecovered,
                         "New deaths:" to covidEntity.newDeaths,
@@ -43,7 +45,7 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
                 } else if (covidEntity is CountryCovid) {
                     val covidEntityAsMap = mapOf<String, Any?>(
                         "title" to covidEntity.country,
-                        "Date:" to covidEntity.date,
+                        "Date:" to unixTimeStampToString(covidEntity.date.toLong()),
                         "New confirmed:" to covidEntity.newConfirmed,
                         "New recovered:" to covidEntity.newRecovered,
                         "New deaths:" to covidEntity.newDeaths,
@@ -55,7 +57,7 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
                 } else if (covidEntity is StateUsCovid) {
                     val covidEntityAsMap = mapOf<String, Any?>(
                         "title" to covidEntity.state,
-                        "Date:" to covidEntity.date,
+                        "Date:" to unixTimeStampToString(covidEntity.date.toLong()),
                         "New confirmed:" to covidEntity.newConfirmed,
                         "New deaths:" to covidEntity.newDeaths,
                         "Total confirmed:" to covidEntity.totalConfirmed,
@@ -68,6 +70,11 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
                 _homeView.drawFavorites(favoritesAsMaps)
             }
         }
+    }
+
+    private fun unixTimeStampToString(unixTimeStamp: Long): String {
+        val df = Date(unixTimeStamp)
+        return SimpleDateFormat("yyyy-dd-MM").format(df)
     }
 
 }
