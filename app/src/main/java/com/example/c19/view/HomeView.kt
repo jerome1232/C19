@@ -1,7 +1,11 @@
 package com.example.c19.view
 
-import com.example.c19.model.StateUsCovid
-
+/**
+ * Home view interface
+ */
 interface HomeView {
-    fun setStateData(stateUsCovid: StateUsCovid?)
+    /**
+     * Calls the function in the view that updates the card carousel of favorites
+     */
+    fun drawFavorites(favorites: List<Map<String, Any?>>)
 }
