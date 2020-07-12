@@ -8,17 +8,16 @@ import androidx.cardview.widget.CardView
 import androidx.viewpager.widget.PagerAdapter
 import com.example.c19.R
 import org.jetbrains.annotations.NotNull
-import kotlin.properties.Delegates
 
 class CardPageAdapter() : PagerAdapter(), CardAdapter {
 
-    private var cards : MutableList<CardModel>
+    private var cards : MutableList<Map<String, Any?>>
     private var cardViews : MutableList<CardView?>
     private var mBaseElevation = 0f
 
 
-    fun addCardItem(card : CardModel) {
-        cards.add(card)
+    fun addCardItem(cardData : Map<String, Any?>) {
+        cards.add(cardData)
         cardViews.add(null)
 
     }
@@ -66,20 +65,32 @@ class CardPageAdapter() : PagerAdapter(), CardAdapter {
         cardViews[position] = null
     }
 
-    private fun bind(card : CardModel, view : View) {
+    private fun bind(cardInfo : Map<String, Any?>, view : View) {
 
+        val title = view.findViewById<TextView>(R.id.cardTitle)
+        val names = listOf<TextView>(
+            view.findViewById(R.id.totalCases),
+            view.findViewById(R.id.totalCases2),
+            view.findViewById(R.id.totalCases3),
+            view.findViewById(R.id.totalCases4)
+        )
+        val values = listOf<TextView>(
+            view.findViewById(R.id.totalCaseNum),
+            view.findViewById(R.id.activeCaseNum),
+            view.findViewById(R.id.recoveredNum),
+            view.findViewById(R.id.deathsNum)
+        )
 
-        val cardTitle : TextView = view.findViewById(R.id.cardTitle)
-        val numTotalCase : TextView = view.findViewById(R.id.totalCaseNum)
-        val numActiveCase : TextView = view.findViewById(R.id.activeCaseNum)
-        val numRecover : TextView = view.findViewById(R.id.recoveredNum)
-        val numDeath : TextView = view.findViewById(R.id.deathsNum)
-
-        cardTitle.text = card.title
-        numTotalCase.text = String.format(card.numTotal.toString())
-        numActiveCase.text = String.format(card.numActive.toString())
-        numRecover.text = String.format(card.numRecover.toString())
-        numDeath.text = String.format(card.numDeaths.toString())
+        val nameValuePairs = (names zip values)
+        val cardInfoMutable = cardInfo.toMutableMap()
+        title.text = cardInfoMutable["title"].toString()
+        cardInfoMutable.remove("title")
+        cardInfoMutable.keys.forEachIndexed { index, key ->
+            if (index < nameValuePairs.size) {
+                nameValuePairs[index].first.text = key
+                nameValuePairs[index].second.text = cardInfo[key].toString()
+            }
+        }
     }
 
     init {
