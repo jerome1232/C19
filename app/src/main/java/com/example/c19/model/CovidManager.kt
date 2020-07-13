@@ -1,12 +1,10 @@
 package com.example.c19.model
 
 import android.util.Log
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Locale.ROOT
-import kotlin.jvm.java as java1
 
 /**
  *  CovidManager manages current data for
@@ -51,9 +49,10 @@ class CovidManager {
         if (entity != null) return entity
         // if fetching a state failed maybe it's a country
         entity = getCountry(entityName)
-        if (entity != null) return entity
+//        if (entity != null) return entity
+        return entity
         // this place doesn't exist in our api's
-        return null
+//        return null
     }
 
     /**
@@ -76,12 +75,9 @@ class CovidManager {
         if (null != countryCovid) return countryCovid
         // if no match was found, fetch from the api
         countryCovid = apiCountryFetch(country)
-        if (countryCovid != null) {
-            countries.add(countryCovid)
-            return countryCovid
-        }
+        if (countryCovid != null) countries.add(countryCovid)
         // return null on failure to find a country
-        return null
+        return countryCovid
     }
 
     /**
@@ -103,26 +99,23 @@ class CovidManager {
         if (stateUsCovid != null) return stateUsCovid
         // if no match was found, fetch data from the api
         stateUsCovid = apiStateFetch(state)
-        if (stateUsCovid != null) {
-            states.add(stateUsCovid)
-            return stateUsCovid
-        }
+        if (stateUsCovid != null) states.add(stateUsCovid)
         // return null on failure to find a state
-        return null
+        return stateUsCovid
     }
 
     private fun apiGlobalFetch(): GlobalCovid? {
         val customGson = GsonBuilder()
-            .registerTypeAdapter(GlobalCovid::class.java1, GlobalDeserializer())
+            .registerTypeAdapter(GlobalCovid::class.java, GlobalDeserializer())
             .create()
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.covid19api.com/")
             .addConverterFactory(GsonConverterFactory.create(customGson))
             .build()
-        val service = retrofit.create(CovidApi::class.java1)
+        val service = retrofit.create(CovidApi::class.java)
         val call = service.getGlobal()
         val response = call.execute()
-        Log.i(TAG, "Response: ${response.code().toString()}")
+        Log.i(TAG, "Response: ${response.code()}")
         Log.i(TAG, response.body().toString())
         if (response.code() == 200) return response.body()
         return null
@@ -147,9 +140,8 @@ class CovidManager {
             .baseUrl("https://corona.lmao.ninja/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        val service = retrofit.create(CovidApi::class.java1)
+        val service = retrofit.create(CovidApi::class.java)
         val call = service.getState(state)
-        Log.i(TAG, call.toString())
         val response = call.execute()
         if (response.code() == 200) return response.body()
         return null
@@ -192,9 +184,8 @@ class CovidManager {
             .baseUrl("https://corona.lmao.ninja/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        val service = retrofit.create(CovidApi::class.java1)
+        val service = retrofit.create(CovidApi::class.java)
         val call = service.getCountry(country)
-        Log.i(TAG, call.toString())
         val response = call.execute()
         Log.i(TAG, "Response code: ${response.code()}")
         if (response.code() == 200) return response.body()

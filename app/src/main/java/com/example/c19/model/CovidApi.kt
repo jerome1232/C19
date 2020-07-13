@@ -28,7 +28,7 @@ later.
     fun getGlobal(): Call<GlobalCovid>
 
     @GET("total/dayone/country/{country}")
-    fun getHistCountry(@Path("country") key: String): Call<CovidHistCountry>
+    fun getHistCountry(@Path("country") key: String): Call<List<CovidHistCountry>>
 
     @GET("nyt/states?state")
     fun getHistState(): Call<CovidHistState>
