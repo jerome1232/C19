@@ -214,4 +214,18 @@ class CovidManager {
         Log.i(TAG, "Nothing found")
         return null
     }
+
+    /**
+     * Load the saved favorites
+     *
+     * @author
+     * @return
+     */
+    fun getFavorites(): List<CovidEntity?> {
+        return listOf<CovidEntity?>(
+            getGlobal(),
+            getCountry("Bolivia"),
+            getState("Idaho")
+        )
+    }
 }
