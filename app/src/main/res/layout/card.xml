@@ -94,7 +94,7 @@
                 android:gravity="start"
                 android:text="Total Cases:"
                 android:textColor="#ffffff"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/header_divider" />
 
@@ -110,7 +110,7 @@
                 android:gravity="start"
                 android:text="Active Cases:"
                 android:textColor="#ffffff"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/body_divider" />
 
@@ -126,7 +126,7 @@
                 android:gravity="start"
                 android:text="Recovered:"
                 android:textColor="#ffffff"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/body_divider2" />
 
@@ -142,7 +142,7 @@
                 android:gravity="start"
                 android:text="Deaths:"
                 android:textColor="#ffffff"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/body_divider3" />
 

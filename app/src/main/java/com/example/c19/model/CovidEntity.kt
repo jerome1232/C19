@@ -1,6 +1,10 @@
 package com.example.c19.model
 
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
 import com.google.gson.annotations.SerializedName
+import java.lang.reflect.Type
 
 /**
  * This class represents a generic
@@ -20,7 +24,7 @@ abstract class CovidEntity {
  * Represents Covid 19 data for a country
  *
  * @author Jeremy D. Jones
- * @property country
+ * @property name
  * @property date
  * @property newConfirmed
  * @property totalConfirmed
@@ -30,7 +34,8 @@ abstract class CovidEntity {
  * @property totalRecovered
  */
 data class CountryCovid(
-    val country: String,
+    @SerializedName("country")
+    val name: String,
     @SerializedName("updated")
     val date: String,
     @SerializedName("todayCases")
@@ -56,7 +61,7 @@ data class CountryInfo(
  * Represents Covid 19 data for a state
  *
  * @author Jeremy D. Jones
- * @property state
+ * @property name
  * @property newConfirmed
  * @property totalConfirmed
  * @property newDeaths
@@ -64,7 +69,8 @@ data class CountryInfo(
  * @property date
  */
 data class StateUsCovid(
-    val state: String,
+    @SerializedName("state")
+    val name: String,
     @SerializedName("todayCases")
     override val newConfirmed: Int,
     @SerializedName("cases")
@@ -100,8 +106,10 @@ data class GlobalCovid(
     @SerializedName("NewRecovered")
     val newRecovered: Int,
     @SerializedName("TotalRecovered")
-    val totalRecovered: Int
-) : CovidEntity()
+    val totalRecovered: Int,
+    @SerializedName("Date")
+    val date: String
+): CovidEntity()
 
 /**
  * Simple data class to hold Global Covid 19 data
@@ -112,15 +120,42 @@ data class GlobalCovid(
  * @property data
  */
 data class GlobalCovidSummary (
-    // these aren't really used...
-    // they are just here to satisfy inheritance
-    override val newConfirmed: Int,
-    override val totalConfirmed: Int,
-    override val newDeaths: Int,
-    override val totalDeaths: Int,
-    // The real stuff
+
     @SerializedName("Global")
     val global: GlobalCovid,
     @SerializedName("Date")
     val data: String
-) : CovidEntity()
+)
+
+/**
+ * Custom builds a GlobalCovid object to more closely
+ * resemble other data types.
+ *
+ * @author Jeremy D. Jones
+ *
+ */
+class GlobalDeserializer: JsonDeserializer<GlobalCovid> {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type?,
+        context: JsonDeserializationContext?
+    ): GlobalCovid {
+        val jsonObject = json.asJsonObject
+
+        /*
+        I know, I used single letter variables here
+        but their purpose should be clear based on the
+        key they are being retrieved from.
+        */
+        val d = jsonObject.get("Date").asString
+        val g = jsonObject.get("Global").asJsonObject
+        val nc = g.get("NewConfirmed").asInt
+        val tc = g.get("TotalConfirmed").asInt
+        val nd = g.get("NewDeaths").asInt
+        val td = g.get("TotalDeaths").asInt
+        val nr = g.get("NewRecovered").asInt
+        val tr = g.get("TotalRecovered").asInt
+
+        return GlobalCovid(nc, tc, nd, td, nr, tr, d)
+    }
+}
