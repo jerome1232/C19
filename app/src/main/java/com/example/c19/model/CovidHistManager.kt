@@ -48,15 +48,22 @@ class CovidHistManager {
      * @return
      */
     private fun getState(name: String) : List<CovidHistState> {
+        // Checking state list to see if we already have this item in memory
         var state = searchState(name)
         if (state.isNotEmpty()) return state
+
+        // If we don't have the state, get it from API
         state = apiStateFetch()
+
+        // Unfortunately this api doesn't allow specification of a single state.
+        // So I loop through data returned and only grab the state of interest.
         val stateWanted = mutableListOf<CovidHistState>()
         for (item in state) {
             if (item.name.toLowerCase(ROOT) == name.toLowerCase(ROOT)) {
                 stateWanted.add(item)
             }
         }
+        // Return a list of historical data, on failure it returns an empty list
         return stateWanted
     }
 
@@ -67,6 +74,7 @@ class CovidHistManager {
      * @return
      */
     private fun apiStateFetch(): List<CovidHistState> {
+        // retrofit 2
         val retrofit = Retrofit.Builder()
             .baseUrl("https://corona.lmao.ninja/v2/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -74,9 +82,10 @@ class CovidHistManager {
         val service = retrofit.create(CovidApi::class.java)
         val call = service.getHistState()
         val response = call.execute()
-        if (response.code() == 200) {
-            return response.body() as List<CovidHistState>
-        }
+
+        // If response code is good, return the data
+        if (response.code() == 200) return response.body() as List<CovidHistState>
+        // on failure, return an empty list
         return emptyList()
     }
 
@@ -97,6 +106,7 @@ class CovidHistManager {
             }
         }
         Log.i(TAG, "Not found as state")
+        // On failure to find a state, return an empty list
         return emptyList()
     }
 
@@ -108,9 +118,13 @@ class CovidHistManager {
      * @return
      */
     private fun getCountry(name: String) : List<CovidHistCountry> {
+        // First search memory to see if we already retrieved this country
         var country = searchCountry(name)
         if (country.isNotEmpty()) return country
+
+        // Otherwise retrieve it from API
         country = apiCountryFetch(name)
+
         return country
     }
 
@@ -130,6 +144,7 @@ class CovidHistManager {
                 return item
             }
         }
+        // On failure return an empty list
         return emptyList()
 
     }
@@ -142,6 +157,7 @@ class CovidHistManager {
      * @return
      */
     private fun apiCountryFetch(name: String): List<CovidHistCountry> {
+        // Retrofit 2 portion
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.covid19api.com/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -149,8 +165,11 @@ class CovidHistManager {
         val service = retrofit.create(CovidApi::class.java)
         val call = service.getHistCountry(name)
         val response = call.execute()
+
         Log.i(TAG, "Country response: ${response.code()}")
+        // On a good response, return the data
         if (response.code() == 200) return response.body() as List<CovidHistCountry>
+        // otherwise return an empty list
         return emptyList()
     }
 }

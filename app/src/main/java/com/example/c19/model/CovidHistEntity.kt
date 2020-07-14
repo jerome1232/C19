@@ -1,7 +1,6 @@
 package com.example.c19.model
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 /**
  * A generic class to represent
