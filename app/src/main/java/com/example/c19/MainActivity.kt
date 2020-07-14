@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      * @param view
      */
     fun dataCountryTest(view: View) {
-        val manager = CovidManager()
+//        val manager = CovidManager()
         val hManager = CovidHistManager()
 //        doAsync {
 //            val country = manager.getEntity("Bolivia")
@@ -156,17 +156,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //            }
 //        }
         doAsync {
-            val globalStats = hManager.getHistEntity("bolivia")
+            val globalStats = hManager.getHistEntity("Idaho")
             uiThread {
                 if (globalStats.isNotEmpty()) {
-                    if (globalStats[0] is CovidHistCountry) {
+                    if (globalStats[0] is CovidHistState) {
                         Log.i("dataTest", globalStats[0].name)
                     }
                 }
                 Log.i("dataTest", globalStats.toString())
                 var i = 0
                 for (item in globalStats) {
-                    if (item is CovidHistCountry) {
+                    if (item is CovidHistState) {
                         Log.i("DataTest", i++.toString())
                         Log.i("DataTest", item.name)
                         Log.i("DataTest", item.confirmed.toString())

@@ -31,5 +31,5 @@ later.
     fun getHistCountry(@Path("country") key: String): Call<List<CovidHistCountry>>
 
     @GET("nyt/states?state")
-    fun getHistState(): Call<CovidHistState>
+    fun getHistState(): Call<List<CovidHistState>>
 }
