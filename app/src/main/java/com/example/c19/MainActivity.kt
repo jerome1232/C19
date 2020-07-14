@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
@@ -39,13 +40,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         actionBarDrawerToggle.isDrawerIndicatorEnabled = true
         actionBarDrawerToggle.syncState()
 
-        // Remove the default name in the Toolbar
-/*        setSupportActionBar(toolbar)
-          supportActionBar?.setDisplayShowTitleEnabled(false)
-          val toolbarTitle = findViewById<TextView>(R.id.toolbar) // Use our own TextView in the toolbar
-          val mTitle = toolbarTitle.findViewById<TextView>(R.id.toolbar_title)
-
- */
+        // Assign home_Fragment as the default fragment to load into on app start
         homeFragment = HomeFragment()
         supportFragmentManager
             .beginTransaction()
@@ -114,6 +109,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         else {
             super.onBackPressed()
         }
+    }
+
+    fun btnStartSearch(view : View) {
+
+        Toast.makeText(this, "Button Test Successful",  Toast.LENGTH_SHORT).show()
     }
 
     /**
