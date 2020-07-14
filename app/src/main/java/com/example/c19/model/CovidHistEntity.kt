@@ -17,18 +17,14 @@ abstract class CovidHistEntity {
     abstract val date: String
 }
 
-// val name : String
-// val confirmed : Int
-// val deaths : Int
-// val recovered : Int
-// val active : Int
-// val date : String
-
-// https://corona.lmao.ninja/v2/nyt/states?state
 /**
  * Represents Historical data for US States
  *
  * @author Jeremy D. Jones
+ *
+ * The api url: https://corona.lmao.ninja/v2/nyt/states?state
+ *      Unfortunately there is no way to specify a single state
+ *      so the state desired is sorted out as the data is retrieved.
  *
  * @property name
  * @property confirmed
@@ -44,12 +40,13 @@ data class CovidHistState(
     override val date: String
 ) : CovidHistEntity()
 
-// https://api.covid19api.com/total/dayone/country/:country
 /**
  * Represents Historical data of Countries
  *
  * @author Jeremy D. Jones
  *
+ * The api url: https://api.covid19api.com/total/dayone/country/:country
+ *      where :country is the country desired
  * @property name
  * @property confirmed
  * @property deaths
