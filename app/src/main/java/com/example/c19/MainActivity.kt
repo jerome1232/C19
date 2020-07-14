@@ -8,13 +8,11 @@ import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
-import androidx.viewpager.widget.ViewPager
 import com.example.c19.model.*
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_toolbar.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -126,47 +124,67 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      * @param view
      */
     fun dataCountryTest(view: View) {
-//        val manager = CovidManager()
+        val manager = CovidManager()
         val hManager = CovidHistManager()
-//        doAsync {
-//            val country = manager.getEntity("Bolivia")
-//            uiThread {
-//                if (country is CountryCovid) {
-//                    println(country.name)
-//                }
-//                Log.i("dataTest", country.toString())
-//            }
-//        }
-//        doAsync {
-//            val state = manager.getEntity("Idaho")
-//            uiThread {
-//                if (state is StateUsCovid) {
-//                    println(state.name)
-//                }
-//                Log.i("dataTest", state.toString())
-//            }
-//        }
-//        doAsync {
-//            val globalStats = manager.getGlobal()
-//            uiThread {
-//                if (globalStats is GlobalCovid) {
-//                    Log.i("dataTest", globalStats.newRecovered.toString())
-//                }
-//                Log.i("dataTest", globalStats.toString())
-//            }
-//        }
         doAsync {
-            val globalStats = hManager.getHistEntity("Idaho")
+            val country = manager.getEntity("Bolivia")
             uiThread {
-                if (globalStats.isNotEmpty()) {
-                    if (globalStats[0] is CovidHistState) {
-                        Log.i("dataTest", globalStats[0].name)
-                    }
+                if (country is CountryCovid) {
+                    println(country.name)
+                }
+                Log.i("dataTest", country.toString())
+            }
+        }
+        doAsync {
+            val state = manager.getEntity("Idaho")
+            uiThread {
+                if (state is StateUsCovid) {
+                    println(state.name)
+                }
+                Log.i("dataTest", state.toString())
+            }
+        }
+        doAsync {
+            val globalStats = manager.getGlobal()
+            uiThread {
+                if (globalStats is GlobalCovid) {
+                    Log.i("dataTest", globalStats.newRecovered.toString())
                 }
                 Log.i("dataTest", globalStats.toString())
+            }
+        }
+        doAsync {
+            val test = hManager.getHistEntity("Idaho")
+            uiThread {
+                if (test.isNotEmpty()) {
+                    if (test[0] is CovidHistState) {
+                        Log.i("dataTest", test[0].name)
+                    }
+                }
+                Log.i("dataTest", test.toString())
                 var i = 0
-                for (item in globalStats) {
+                for (item in test) {
                     if (item is CovidHistState) {
+                        Log.i("DataTest", i++.toString())
+                        Log.i("DataTest", item.name)
+                        Log.i("DataTest", item.confirmed.toString())
+                        Log.i("DataTest", item.date)
+                    }
+                }
+            }
+        }
+        doAsync {
+            val test = hManager.getHistEntity("Idaho")
+            uiThread {
+                if (test.isNotEmpty()) {
+                    if (test[0] is CovidHistCountry) {
+                        Log.i("dataTest", test[0].name)
+                    }
+                }
+                Log.i("dataTest", test.toString())
+                var i = 0
+                for (item in test) {
+                    if (item is CovidHistCountry) {
                         Log.i("DataTest", i++.toString())
                         Log.i("DataTest", item.name)
                         Log.i("DataTest", item.confirmed.toString())
