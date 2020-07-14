@@ -42,7 +42,7 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
                     favoritesAsMaps.add(covidEntityAsMap)
                 } else if (covidEntity is CountryCovid) {
                     val covidEntityAsMap = mapOf<String, Any?>(
-                        "title" to covidEntity.country,
+                        "title" to covidEntity.name,
                         "Date:" to covidEntity.date,
                         "New confirmed:" to covidEntity.newConfirmed,
                         "New recovered:" to covidEntity.newRecovered,
@@ -54,7 +54,7 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
                     favoritesAsMaps.add(covidEntityAsMap)
                 } else if (covidEntity is StateUsCovid) {
                     val covidEntityAsMap = mapOf<String, Any?>(
-                        "title" to covidEntity.state,
+                        "title" to covidEntity.name,
                         "Date:" to covidEntity.date,
                         "New confirmed:" to covidEntity.newConfirmed,
                         "New deaths:" to covidEntity.newDeaths,
