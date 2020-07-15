@@ -51,11 +51,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .commit()
 
 
-
-
     }
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
+
+
+
 
         when(menuItem.itemId) {
             R.id.home -> {
@@ -101,6 +102,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         drawerLayout.closeDrawer(GravityCompat.START)
+
         return true
     }
 
