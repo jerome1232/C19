@@ -21,9 +21,11 @@ class CovidManager {
 
     // keeping independent lists for states and countries.
     companion object {
+        private var globalStats: GlobalCovid? = null
         private var states = mutableListOf<StateUsCovid>()
         private var countries = mutableListOf<CountryCovid>()
     }
+
 
     /**
      * Retrieves global summary stats
@@ -33,7 +35,9 @@ class CovidManager {
      * @return
      */
     fun getGlobal() : CovidEntity? {
-        return apiGlobalFetch()
+        if (globalStats != null ) return globalStats
+        globalStats = apiGlobalFetch()
+        return globalStats
     }
 
     /**
@@ -104,10 +108,18 @@ class CovidManager {
         return stateUsCovid
     }
 
+    /**
+     * Returns global data from api fetch
+     *
+     * @return
+     */
     private fun apiGlobalFetch(): GlobalCovid? {
+        Log.i(TAG, "Fetching Global Data from API")
+        // Custom Gson Deserializer
         val customGson = GsonBuilder()
             .registerTypeAdapter(GlobalCovid::class.java, GlobalDeserializer())
             .create()
+        // Retrofit 2 stuff
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.covid19api.com/")
             .addConverterFactory(GsonConverterFactory.create(customGson))
@@ -115,6 +127,7 @@ class CovidManager {
         val service = retrofit.create(CovidApi::class.java)
         val call = service.getGlobal()
         val response = call.execute()
+
         Log.i(TAG, "Response: ${response.code()}")
         Log.i(TAG, response.body().toString())
         if (response.code() == 200) return response.body()

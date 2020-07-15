@@ -53,6 +53,12 @@ data class CountryCovid(
     val countryInfo: CountryInfo
     ) : CovidEntity()
 
+/**
+ * Represents a countries flag url
+ *
+ * @author Jeremy Jones
+ * @property flag
+ */
 data class CountryInfo(
     val flag: String
 )
