@@ -1,10 +1,12 @@
 package UICard
 
+import android.app.ActionBar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.example.c19.R
 import org.jetbrains.annotations.NotNull
@@ -69,16 +71,28 @@ class CardPageAdapter() : PagerAdapter(), CardAdapter {
 
         val title = view.findViewById<TextView>(R.id.cardTitle)
         val names = listOf<TextView>(
-            view.findViewById(R.id.totalCases),
-            view.findViewById(R.id.totalCases2),
-            view.findViewById(R.id.totalCases3),
-            view.findViewById(R.id.totalCases4)
+            view.findViewById(R.id.name1),
+            view.findViewById(R.id.name2),
+            view.findViewById(R.id.name3),
+            view.findViewById(R.id.name4),
+            view.findViewById(R.id.name5),
+            view.findViewById(R.id.name6)
         )
         val values = listOf<TextView>(
-            view.findViewById(R.id.totalCaseNum),
-            view.findViewById(R.id.activeCaseNum),
-            view.findViewById(R.id.recoveredNum),
-            view.findViewById(R.id.deathsNum)
+            view.findViewById(R.id.value1),
+            view.findViewById(R.id.value2),
+            view.findViewById(R.id.value3),
+            view.findViewById(R.id.value4),
+            view.findViewById(R.id.value5),
+            view.findViewById(R.id.value6)
+        )
+        val dividers = listOf<View>(
+            view.findViewById(R.id.divider1),
+            view.findViewById(R.id.divider2),
+            view.findViewById(R.id.divider3),
+            view.findViewById(R.id.divider4),
+            view.findViewById(R.id.divider5),
+            view.findViewById(R.id.divider6)
         )
 
         val nameValuePairs = (names zip values)
@@ -90,6 +104,16 @@ class CardPageAdapter() : PagerAdapter(), CardAdapter {
                 nameValuePairs[index].first.text = key
                 nameValuePairs[index].second.text = cardInfo[key].toString()
             }
+        }
+
+        // Hide extra rows
+        val cardLayout = view.findViewById<ConstraintLayout>(R.id.CardLayout)
+        for (i in cardInfoMutable.count()..(nameValuePairs.size - 1)) {
+            names[i].visibility = View.GONE
+            values[i].visibility = View.GONE
+            dividers[i].visibility = View.GONE
+            // reduce the card height
+            cardLayout.layoutParams.height = cardLayout.layoutParams.height - 140
         }
     }
 
