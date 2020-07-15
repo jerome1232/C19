@@ -8,7 +8,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.example.c19.SettingsFragment.Companion.newInstance
 import com.example.c19.model.*
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -112,6 +114,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun btnStartSearch(view : View) {
+
+        // Create a new SearchFragment, and use FragmentManager to open the fragment_search view.
+        val searchFragment = SearchFragment()
+        var transaction : FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container_fragment, searchFragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+
 
         Toast.makeText(this, "Button Test Successful",  Toast.LENGTH_SHORT).show()
     }
