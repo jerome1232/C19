@@ -4,6 +4,9 @@
 
     <!-- Request Internet Permission, needed to make api calls to fetch data -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Request ACCESS_COARSE_LOCATION permission to get a coarse lat/long to determine
+         what state/country a user is in -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
