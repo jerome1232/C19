@@ -24,7 +24,7 @@ abstract class CovidEntity {
  * Represents Covid 19 data for a country
  *
  * @author Jeremy D. Jones
- * @property country
+ * @property name
  * @property date
  * @property newConfirmed
  * @property totalConfirmed
@@ -34,7 +34,8 @@ abstract class CovidEntity {
  * @property totalRecovered
  */
 data class CountryCovid(
-    val country: String,
+    @SerializedName("country")
+    val name: String,
     @SerializedName("updated")
     val date: String,
     @SerializedName("todayCases")
@@ -52,6 +53,12 @@ data class CountryCovid(
     val countryInfo: CountryInfo
     ) : CovidEntity()
 
+/**
+ * Represents a countries flag url
+ *
+ * @author Jeremy Jones
+ * @property flag
+ */
 data class CountryInfo(
     val flag: String
 )
@@ -60,7 +67,7 @@ data class CountryInfo(
  * Represents Covid 19 data for a state
  *
  * @author Jeremy D. Jones
- * @property state
+ * @property name
  * @property newConfirmed
  * @property totalConfirmed
  * @property newDeaths
@@ -68,7 +75,8 @@ data class CountryInfo(
  * @property date
  */
 data class StateUsCovid(
-    val state: String,
+    @SerializedName("state")
+    val name: String,
     @SerializedName("todayCases")
     override val newConfirmed: Int,
     @SerializedName("cases")
