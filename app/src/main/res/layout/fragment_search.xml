@@ -2,31 +2,68 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
-        android:textAlignment="center"
-        android:text="Search Fragment"
-        android:textSize="40sp"/>
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="54dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="110dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="35dp"
         android:background="@color/colorSecondary"
         android:onClick="gpsRequest"
         android:tint="@color/colorPrimaryDark"
         app:srcCompat="@android:drawable/ic_menu_mylocation" />
 
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="302dp" />
+    <EditText
+        android:id="@+id/searchInput"
+        android:layout_width="247dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="73dp"
+        android:ems="10"
+        android:hint="Enter global, state, country"
+        android:inputType="textPersonName"
+        android:visibility="visible"
+        tools:visibility="visible" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/cardSearchViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="460dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="19dp"
+        android:clipToPadding="false"
+        android:foregroundGravity="center"
+        android:overScrollMode="never"
+        android:paddingStart="30dp"
+        android:paddingLeft="30dp"
+        android:paddingEnd="30dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="30dp"/>
+
+    <Button
+        android:id="@+id/btn_go"
+        android:layout_width="49dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="74dp"
+        android:layout_marginEnd="88dp"
+        android:background="#B70BB823"
+        android:bottomLeftRadius="10dp"
+        android:bottomRightRadius="10dp"
+        android:onClick="btnGetCard"
+        android:text="GO"
+        android:textColor="#FFFFFF"
+        android:topLeftRadius="10dp"
+        android:topRightRadius="10dp" />
 </RelativeLayout>

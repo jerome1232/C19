@@ -1,9 +1,6 @@
 package com.example.c19.presenter
 
-import com.example.c19.model.CountryCovid
-import com.example.c19.model.CovidManager
-import com.example.c19.model.GlobalCovid
-import com.example.c19.model.StateUsCovid
+import com.example.c19.model.*
 import com.example.c19.view.HomeView
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -70,6 +67,13 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
                 _homeView.drawFavorites(favoritesAsMaps)
             }
         }
+    }
+
+    fun getEntity(entityName : String) : CovidEntity? {
+
+        val entity : CovidEntity? = _covidStateManager.getEntity(entityName)
+
+        return entity
     }
 
     private fun unixTimeStampToString(unixTimeStamp: Long): String {

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_toolbar.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import java.util.*
 
@@ -133,6 +135,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    /**
+     * Start the search_fragment for finding different cards to add to the home_fragment viewPager
+     *
+     * @author Chase Moses
+     */
+
     fun btnStartSearch(view : View) {
 
         // Create a new SearchFragment, and use FragmentManager to open the fragment_search view.
@@ -145,6 +153,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         Toast.makeText(this, "Button Test Successful",  Toast.LENGTH_SHORT).show()
     }
+
+    /**
+     * Take user input to obtain correct entity based on input.
+     *
+     * @author Chase Moses
+     */
+
+    fun btnGetCard() {
+
+}
 
     /**
      * Get's the devices last known location and finds

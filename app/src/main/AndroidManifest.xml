@@ -8,6 +8,11 @@
          what state/country a user is in -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <supports-screens
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:anyDensity="true"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_virus"
