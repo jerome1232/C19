@@ -28,19 +28,6 @@ class CovidManager {
 
 
     /**
-     * Retrieves global summary stats
-     *
-     * @author Jeremy D. Jones
-     *
-     * @return
-     */
-    fun getGlobal() : CovidEntity? {
-        if (globalStats != null ) return globalStats
-        globalStats = apiGlobalFetch()
-        return globalStats
-    }
-
-    /**
      * Retrieves either a state or a country
      *
      * @author Jeremy D. Jones
@@ -48,15 +35,18 @@ class CovidManager {
      * @return
      */
     fun getEntity(entityName: String): CovidEntity? {
-        // first try fetching a state
+        // First try getting global stats
+        if (entityName.toLowerCase(ROOT) == "global") {
+            if (globalStats != null ) return globalStats
+            globalStats = apiGlobalFetch()
+            return  globalStats
+        }
+        // Second try fetching a state
         var entity : CovidEntity? = getState(entityName)
         if (entity != null) return entity
         // if fetching a state failed maybe it's a country
         entity = getCountry(entityName)
-//        if (entity != null) return entity
         return entity
-        // this place doesn't exist in our api's
-//        return null
     }
 
     /**
@@ -236,9 +226,9 @@ class CovidManager {
      */
     fun getFavorites(): List<CovidEntity?> {
         return listOf<CovidEntity?>(
-            getGlobal(),
-            getCountry("Bolivia"),
-            getState("Idaho")
+            getEntity("global"),
+            getEntity("Bolivia"),
+            getEntity("Idaho")
         )
     }
 }
