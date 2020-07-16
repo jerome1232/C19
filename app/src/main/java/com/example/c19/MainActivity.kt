@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Toast.makeText(this, "Button Test Successful",  Toast.LENGTH_SHORT).show()
     }
 
-    fun gpsRequest(view: View): String {
+    fun gpsRequest(view: View) {
         val TAG = "gpsRequest"
         val RECORD_REQUEST_CODE = 101
         var name = ""
@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
                 RECORD_REQUEST_CODE
             )
-            return name
+            return
         }
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
             // we got it
@@ -171,7 +171,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this, "Location: $name", Toast.LENGTH_SHORT).show()
             }
         }
-        return name
+        return
     }
 
     /**
