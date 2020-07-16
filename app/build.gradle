@@ -24,6 +24,15 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url "https://jitpack.io"
+        content {
+            includeGroup "com.github.PhilJay"
+        }
+    }
+}
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -51,4 +60,6 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     // Kotlin coroutines library
     implementation "org.jetbrains.anko:anko-commons:0.10.4"
+    // Charting library
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
