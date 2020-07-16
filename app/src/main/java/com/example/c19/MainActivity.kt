@@ -23,7 +23,6 @@ import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_toolbar.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import java.util.*
 
@@ -175,6 +174,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val TAG = "gpsRequest"
         val RECORD_REQUEST_CODE = 101
         var name: String
+        val searchInputBar = findViewById<EditText>(R.id.searchInputBar)
 
         // Checking to see if we have permission to use location services.
         if (ActivityCompat.checkSelfPermission(
@@ -203,10 +203,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 name = addresses.get(0).countryName
                 if (name == "United States") name = addresses.get(0).adminArea
                 Toast.makeText(this, "Location: $name", Toast.LENGTH_SHORT).show()
+
+
+                searchInputBar.setText(name)
             } else {
                 Toast.makeText(this, "No location data", Toast.LENGTH_SHORT).show()
             }
         }
+
+
+
         return
     }
 

@@ -6,19 +6,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.c19.model.CovidManager
 import com.example.c19.presenter.HomePresenterImpl
 import com.example.c19.view.HomeView
-import com.google.android.gms.location.LocationServices
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
+/**
+ * This Fragment is responsible for getting a country or state input from the user and
+ * displaying the card with the relevant data for the entity the user put in. Thanks to Jeremy,
+ * GPS location will get the location and auto-populate the input field for the user.
+ *
+ * @author Chase Moses
+ */
 
 class SearchFragment : Fragment(), HomeView, View.OnClickListener {
 
@@ -35,10 +38,9 @@ class SearchFragment : Fragment(), HomeView, View.OnClickListener {
 
         _viewPager = view.findViewById(R.id.cardSearchViewPager)
         _cardAdapter = CardPageAdapter()
+
         val btnGo = view.findViewById<Button>(R.id.btn_go)
         btnGo.setOnClickListener(this)
-
-
 
 
         return view
@@ -49,9 +51,10 @@ class SearchFragment : Fragment(), HomeView, View.OnClickListener {
         TODO("Not yet implemented")
     }
 
+    // On Click for the Go button
     override fun onClick(v: View?) {
 
-        val inputResult = view?.findViewById<EditText>(R.id.searchInput)
+        val inputResult = view?.findViewById<EditText>(R.id.searchInputBar)
         val result = inputResult?.text.toString()
 
         Log.i("Input Test", result)
