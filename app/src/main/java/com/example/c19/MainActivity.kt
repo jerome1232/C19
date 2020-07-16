@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
         doAsync {
-            val globalStats = manager.getGlobal()
+            val globalStats = manager.getEntity("global")
             uiThread {
                 if (globalStats is GlobalCovid) {
                     Log.i("dataTest", globalStats.newRecovered.toString())
