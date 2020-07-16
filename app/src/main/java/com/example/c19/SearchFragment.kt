@@ -17,6 +17,7 @@ import com.example.c19.presenter.HomePresenterImpl
 import com.example.c19.view.HomeView
 import com.google.android.gms.location.LocationServices
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 
 class SearchFragment : Fragment(), HomeView, View.OnClickListener {
@@ -38,10 +39,6 @@ class SearchFragment : Fragment(), HomeView, View.OnClickListener {
         btnGo.setOnClickListener(this)
 
 
-//
-
-
-
 
 
         return view
@@ -55,17 +52,19 @@ class SearchFragment : Fragment(), HomeView, View.OnClickListener {
     override fun onClick(v: View?) {
 
         val inputResult = view?.findViewById<EditText>(R.id.searchInput)
-
         val result = inputResult?.text.toString()
 
         Log.i("Input Test", result)
 
-//        val entity = _homePresenter.getEntity(result)
-//
-//        doAsync {
-//
+
+        doAsync {
+            val entity = _homePresenter.getEntity(result)
+
+            uiThread {
+                Log.i("Search Result Test", entity.toString())
+            }
 
 
-        //}
+        }
     }
 }
