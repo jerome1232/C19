@@ -1,5 +1,10 @@
 package com.example.c19
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,16 +12,23 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.c19.SettingsFragment.Companion.newInstance
 import com.example.c19.model.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_toolbar.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.util.*
+
+// Needed for GPS data
+private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -50,6 +62,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
 
+        // Needed for GPS data
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
     }
 
@@ -126,6 +140,40 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         Toast.makeText(this, "Button Test Successful",  Toast.LENGTH_SHORT).show()
+    }
+
+    fun gpsRequest(view: View) {
+        val TAG = "gpsRequest"
+        val RECORD_REQUEST_CODE = 101
+        var name = ""
+
+        // Checking to see if we have permission to use location services.
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                RECORD_REQUEST_CODE
+            )
+            return
+        }
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            // we got it
+            Log.i(TAG, location.toString())
+
+            val addresses: List<Address>
+            val geocoder: Geocoder = Geocoder(this, Locale.getDefault())
+
+            if (location != null) {
+                addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                name = addresses.get(0).countryName
+                if (name == "United States") name = addresses.get(0).adminArea
+                Toast.makeText(this, "Location: $name", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return
     }
 
     /**
