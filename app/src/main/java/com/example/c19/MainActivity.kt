@@ -5,18 +5,16 @@ import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.example.c19.SettingsFragment.Companion.newInstance
 import com.example.c19.model.*
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -27,8 +25,6 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.util.*
 
-// Needed for GPS data
-private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,6 +32,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var compareFragment: CompareFragment
     lateinit var historicalDataFragment: HistoricalDataFragment
     lateinit var settingsFragment: SettingsFragment
+    // Needed for GPS data
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -148,10 +146,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Toast.makeText(this, "Button Test Successful",  Toast.LENGTH_SHORT).show()
     }
 
+    /**
+     * Get's the devices last known location and finds
+     * the users country/state using that information
+     *
+     * @author Jeremy D. Jones
+     * @param view
+     */
     fun gpsRequest(view: View) {
         val TAG = "gpsRequest"
         val RECORD_REQUEST_CODE = 101
-        var name = ""
+        var name: String
 
         // Checking to see if we have permission to use location services.
         if (ActivityCompat.checkSelfPermission(
@@ -159,24 +164,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            // Requesting permission if we don't have it
             ActivityCompat.requestPermissions(this,
                 arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
                 RECORD_REQUEST_CODE
             )
             return
         }
+        // requesting the last known location
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-            // we got it
             Log.i(TAG, location.toString())
+
 
             val addresses: List<Address>
             val geocoder: Geocoder = Geocoder(this, Locale.getDefault())
 
+            // If we got a location, get the country, if it's the USA, get the state
             if (location != null) {
                 addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
                 name = addresses.get(0).countryName
                 if (name == "United States") name = addresses.get(0).adminArea
                 Toast.makeText(this, "Location: $name", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "No location data", Toast.LENGTH_SHORT).show()
             }
         }
         return
