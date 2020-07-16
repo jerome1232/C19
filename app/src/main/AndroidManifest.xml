@@ -22,6 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Declaring foreground GPS service -->
+        <service
+            android:name="MainActivity"
+            android:foregroundServiceType="location">
+        </service>
     </application>
 
 </manifest>
