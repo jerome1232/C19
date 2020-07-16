@@ -87,9 +87,9 @@ class CardPageAdapter() : PagerAdapter(), CardAdapter {
             view.findViewById(R.id.value6)
         )
         val dividers = listOf<View>(
-            view.findViewById(R.id.divider1),
-            view.findViewById(R.id.divider2),
-            view.findViewById(R.id.divider3),
+            view.findViewById(R.id.body_divider),
+            view.findViewById(R.id.body_divider2),
+            view.findViewById(R.id.body_divider3),
             view.findViewById(R.id.divider4),
             view.findViewById(R.id.divider5),
             view.findViewById(R.id.divider6)

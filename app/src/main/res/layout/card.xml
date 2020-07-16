@@ -59,7 +59,7 @@
                 android:gravity="start"
                 android:text="Total Cases:"
                 android:textColor="#ffffff"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/header_divider" />
@@ -88,6 +88,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/name1" />
 
+
             <TextView
                 android:id="@+id/name2"
                 android:layout_width="128dp"
@@ -96,14 +97,13 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="36dp"
-                android:layout_marginTop="9dp"
+                android:layout_marginTop="12dp"
                 android:gravity="start"
                 android:text="Active Cases:"
                 android:textColor="#ffffff"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/body_divider" />
-
 
             <TextView
                 android:id="@+id/value2"
@@ -141,7 +141,7 @@
                 android:gravity="start"
                 android:text="Active Cases:"
                 android:textColor="#ffffff"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/body_divider2" />
 
@@ -217,11 +217,11 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="36dp"
-                android:layout_marginTop="9dp"
+                android:layout_marginTop="160dp"
                 android:gravity="start"
                 android:text="Active Cases:"
                 android:textColor="#ffffff"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/body_divider" />
 
@@ -261,7 +261,7 @@
                 android:gravity="start"
                 android:text="Active Cases:"
                 android:textColor="#ffffff"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider5" />
 
