@@ -4,6 +4,7 @@ import android.util.Log
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Locale.ROOT
+import kotlin.math.log
 
 private const val TAG = "CovidHistManager"
 
@@ -49,10 +50,9 @@ class CovidHistManager {
     private fun getState(name: String) : List<CovidHistState> {
         // Checking state list to see if we already have this item in memory
         var state = searchState(name)
-        if (state.isNotEmpty()) return state
 
         // If we don't have the state, get it from API
-        state = apiStateFetch()
+        if (state.isEmpty()) state = apiStateFetch()
 
         // Unfortunately this api doesn't allow specification of a single state.
         // So I loop through data returned and only grab the state of interest.
@@ -63,8 +63,7 @@ class CovidHistManager {
             }
         }
         // Return a list of historical data, on failure it returns an empty list
-        if (stateWanted.isNotEmpty()) Log.i(TAG, "\"$name\" retrieved from api")
-        else Log.i(TAG, "\"$name\" not found in state API")
+        states.add(stateWanted)
         return stateWanted
     }
 
@@ -101,6 +100,7 @@ class CovidHistManager {
     private fun searchState(name: String) : List<CovidHistState> {
         Log.i(TAG, "Searching for $name")
         for (item in states) {
+            Log.i(TAG, item.first().name)
             if (item.first().name.toLowerCase(ROOT) == name.toLowerCase(ROOT)) {
                 Log.i(TAG, "$name found as state")
                 return item
