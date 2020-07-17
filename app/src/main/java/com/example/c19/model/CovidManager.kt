@@ -7,6 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.Locale.ROOT
 
+private const val TAG = "CovidManager"
+
 /**
  *  CovidManager manages current data for
  *  states, countries, and global
@@ -17,7 +19,6 @@ import java.util.Locale.ROOT
  *
  */
 class CovidManager {
-    private val TAG = "CovidManager"
     private val fileName = "favorites.dat"
     private val context = MyApp.applicationContext()
     private val file = File(context.filesDir, fileName)
@@ -207,7 +208,7 @@ class CovidManager {
      * Searches memory for a country
      *
      * @author Jeremy D. Jones
-     * @param country
+     * @param name
      * @return
      */
     private fun searchCountryList(name: String): CountryCovid? {
