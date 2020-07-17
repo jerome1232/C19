@@ -73,6 +73,7 @@ class CovidManager {
         var global: GlobalCovid? = null
         if (globalStats != null) global = globalStats
         if (global == null) global = apiGlobalFetch()
+        if (global != null) globalStats = global
         return global
     }
 
