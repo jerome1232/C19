@@ -16,7 +16,7 @@
         android:layout_marginTop="72dp"
         android:layout_marginEnd="35dp"
         android:background="@color/colorSecondary"
-        android:onClick="gpsRequest"
+        android:onClick="searchFragGps"
         android:tint="@color/colorPrimaryDark"
         app:srcCompat="@android:drawable/ic_menu_mylocation" />
 
