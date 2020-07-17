@@ -47,10 +47,7 @@ class CovidManager {
             likely means this is the first run.
             */
             Log.i(TAG, "favorites.dat didn't exist, first run?")
-            Log.i(TAG, "Adding \"global\" to favorites")
-            if (favorites.isEmpty()) favorites.add("global")
-            Log.i(TAG, "Writing to disk")
-            writeFavorite(favorites.first())
+            if (favorites.isEmpty()) addFavorite("global")
         }
     }
 
@@ -233,27 +230,45 @@ class CovidManager {
     /**
      * Load the saved favorites
      *
-     * @author
+     * @author Jeremy D. Jones
      * @return
      */
     fun getFavorites(): List<CovidEntity?> {
         return favorites.map { getEntity(it) }
     }
 
+    /**
+     * Add's a favorite to the favorite list
+     *
+     * @author Jeremy D. Jones
+     * @param name
+     */
     fun addFavorite(name: String) {
-        Log.i(TAG, "Adding $name to favorites list")
+        Log.i(TAG, "Adding \"$name\" to favorites list")
         favorites.add(name)
         Log.i(TAG, "Saving updated favorite list to file")
         writeFavorite(favorites.last())
     }
 
+    /**
+     * Writes a favorite to disk
+     *
+     * @author Jeremy D. Jones
+     * @param name
+     */
     private fun writeFavorite(name: String) {
         file.appendText(name)
         file.appendText("\n")
     }
 
+    /**
+     * Deletes a favorite from favorite list
+     *
+     * @author Jeremy D. Jones
+     * @param name
+     */
     fun delFavorite(name: String) {
-        Log.i(TAG, "Deleting $name from favorites list")
+        Log.i(TAG, "Deleting \"$name\" from favorites list")
         favorites.remove(name)
         Log.i(TAG, "Saving updated favorite list to file")
         // Because this is simple, clearing the file first
