@@ -62,8 +62,9 @@ class CovidHistManager {
                 stateWanted.add(item)
             }
         }
-        // Return a list of historical data, on failure it returns an empty list
-        states.add(stateWanted)
+
+        // on success add it to memory
+        if (stateWanted.isNotEmpty()) states.add(stateWanted)
         return stateWanted
     }
 
@@ -121,12 +122,10 @@ class CovidHistManager {
     private fun getCountry(name: String) : List<CovidHistCountry> {
         // First search memory to see if we already retrieved this country
         var country = searchCountry(name)
-        if (country.isNotEmpty()) return country
-
         // Otherwise retrieve it from API
-        country = apiCountryFetch(name)
-        if (country.isNotEmpty()) Log.i(TAG, "\"$name\" retrieved from API")
-
+        if (country.isEmpty()) country = apiCountryFetch(name)
+        // on success add it to memory
+        if (country.isNotEmpty()) countries.add(country)
         return country
     }
 
