@@ -14,6 +14,8 @@ import com.example.c19.presenter.HomePresenterImpl
 import com.example.c19.view.HomeView
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.util.*
+import kotlin.collections.Map as Map1
 
 /**
  * This Fragment is responsible for getting a country or state input from the user and
@@ -47,7 +49,7 @@ class SearchFragment : Fragment(), HomeView, View.OnClickListener {
     }
 
 
-    override fun drawFavorites(favorites: List<Map<String, Any?>>) {
+    override fun drawFavorites(favorites: List<Map1<String, Any?>>) {
         TODO("Not yet implemented")
     }
 

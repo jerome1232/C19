@@ -69,6 +69,10 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
         }
     }
 
+    /**
+     * REMOVE ME WHENEVER. Just used for testing.
+     */
+
     fun getEntity(entityName : String) : CovidEntity? {
 
         val entity : CovidEntity? = _covidStateManager.getEntity(entityName)

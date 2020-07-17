@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Create a new SearchFragment, and use FragmentManager to open the fragment_search view.
         val searchFragment = SearchFragment()
-        var transaction : FragmentTransaction = supportFragmentManager.beginTransaction()
+        val transaction : FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container_fragment, searchFragment)
         transaction.addToBackStack(null)
         transaction.commit()
