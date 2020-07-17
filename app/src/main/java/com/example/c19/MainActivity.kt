@@ -9,11 +9,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.Toast
+import android.widget.ToggleButton
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.c19.model.*
@@ -72,6 +75,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Needed for GPS data
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        val toggleButton = findViewById<ToggleButton>(R.id.btnToggleFavorite)
     }
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
@@ -147,15 +151,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Toast.makeText(this, "Button Test Successful",  Toast.LENGTH_SHORT).show()
     }
 
-    /**
-     * Take user input to obtain correct entity based on input.
-     *
-     * @author Chase Moses
-     */
-
-    fun btnGetCard() {
-
-}
 
     /**
      * Get's the devices last known location and finds
@@ -209,6 +204,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         return
     }
+
 
     /**
      * TODO REMOVE ME AT WILL

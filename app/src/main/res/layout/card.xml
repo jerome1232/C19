@@ -289,6 +289,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/name6" />
 
+            <ToggleButton
+                android:id="@+id/btnToggleFavorite"
+                android:layout_width="47dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/toggle_image"
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintBottom_toTopOf="@+id/header_divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/cardTitle" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
