@@ -29,7 +29,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Search for a country/state"
                 android:shadowColor="#FFFFFF"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:imeOptions="actionSearch" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
