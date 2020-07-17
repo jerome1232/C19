@@ -1,9 +1,15 @@
 package com.example.c19.model
 
+import android.app.Activity
+import android.app.Application
+import android.content.Context
 import android.util.Log
+import com.example.c19.MainActivity
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
+import java.io.PrintWriter
 import java.util.Locale.ROOT
 
 /**
@@ -18,12 +24,40 @@ import java.util.Locale.ROOT
  */
 class CovidManager {
     private val TAG = "CovidManager"
+    private val fileName = "favorites.dat"
+    private val context = MyApp.applicationContext()
+    private val file = File(context.filesDir, fileName)
 
     // keeping independent lists for states and countries.
     companion object {
         private var globalStats: GlobalCovid? = null
         private var states = mutableListOf<StateUsCovid>()
         private var countries = mutableListOf<CountryCovid>()
+        private var favorites = mutableListOf<String>()
+    }
+
+    /**
+     * runs when class is created.
+     */
+    init {
+        if (file.exists()) {
+            // read from file
+            Log.i(TAG, "favorites.dat exists")
+            favorites.clear()
+            file.forEachLine { favorites.add(it) }
+            Log.i(TAG, "read from file $favorites")
+        } else {
+            /*
+            This line add's global if no data file exist
+            and the favorites list is currently empty. That
+            likely means this is the first run.
+            */
+            Log.i(TAG, "favorites.dat didn't exist, first run?")
+            if (favorites.isEmpty()) favorites.add("global")
+            Log.i(TAG, "Adding \"global\" to favorites")
+            file.writeText(favorites.first())
+            Log.i(TAG, "Writing to disk")
+        }
     }
 
 
@@ -225,10 +259,6 @@ class CovidManager {
      * @return
      */
     fun getFavorites(): List<CovidEntity?> {
-        return listOf<CovidEntity?>(
-            getEntity("global"),
-            getEntity("Bolivia"),
-            getEntity("Idaho")
-        )
+        return favorites.map { getEntity(it) }
     }
 }
