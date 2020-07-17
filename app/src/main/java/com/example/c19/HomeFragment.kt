@@ -1,7 +1,6 @@
 package com.example.c19
 
 import UICard.CardFragmentPageAdapter
-import UICard.CardModel
 import UICard.CardPageAdapter
 import UICard.ShadowTransformer
 import android.os.Bundle
@@ -9,16 +8,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.c19.model.CovidManager
 import com.example.c19.presenter.HomePresenterImpl
 import com.example.c19.view.HomeView
-//import com.example.c19.model.CovidCountryManager
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 
 class HomeFragment : Fragment(), HomeView {
@@ -52,27 +48,6 @@ class HomeFragment : Fragment(), HomeView {
 
 
         return view
-    }
-
-    /**
-     * TODO REMOVE ME AT WILL
-     *
-     * I'm just here for testing
-     *
-     * I'm not sure why but it seems this function
-     * needed to exist in both the fragment and
-     * the MainActivity? I didn't care to research it, I just wanted
-     * it to work for testing.
-     * @param view
-     */
-    fun dataCountryTest(view: View) {
-        doAsync {
-            val manager = CovidManager()
-            val country = manager.getEntity("bolivia")
-            uiThread {
-                Log.i("dataTest", country.toString())
-            }
-        }
     }
 
     companion object {
