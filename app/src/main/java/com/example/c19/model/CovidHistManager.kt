@@ -5,6 +5,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Locale.ROOT
 
+private const val TAG = "CovidHistManager"
+
 /**
  * Manages historical data for states and countries
  *
@@ -12,8 +14,6 @@ import java.util.Locale.ROOT
  *
  */
 class CovidHistManager {
-    private val TAG = "CovidHistManager"
-
     /**
      * These contain lists of lists, each country/state
      * comes in as a list of dates/cases
@@ -33,7 +33,6 @@ class CovidHistManager {
     fun getHistEntity(name: String) : List<CovidHistEntity> {
         var entity : List<CovidHistEntity> = getState(name)
         if (entity.isNotEmpty()) {
-
             return entity
         }
         entity = getCountry(name)
@@ -64,6 +63,8 @@ class CovidHistManager {
             }
         }
         // Return a list of historical data, on failure it returns an empty list
+        if (stateWanted.isNotEmpty()) Log.i(TAG, "\"$name\" retrieved from api")
+        else Log.i(TAG, "\"$name\" not found in state API")
         return stateWanted
     }
 
@@ -74,6 +75,7 @@ class CovidHistManager {
      * @return
      */
     private fun apiStateFetch(): List<CovidHistState> {
+        Log.i(TAG, "Retrieving from state API")
         // retrofit 2
         val retrofit = Retrofit.Builder()
             .baseUrl("https://corona.lmao.ninja/v2/")
@@ -99,9 +101,8 @@ class CovidHistManager {
     private fun searchState(name: String) : List<CovidHistState> {
         Log.i(TAG, "Searching for $name")
         for (item in states) {
-            if (item[0].name.toLowerCase(ROOT) == name.toLowerCase(ROOT)) {
+            if (item.first().name.toLowerCase(ROOT) == name.toLowerCase(ROOT)) {
                 Log.i(TAG, "$name found as state")
-                Log.i(TAG, item[0].toString())
                 return item
             }
         }
@@ -124,6 +125,7 @@ class CovidHistManager {
 
         // Otherwise retrieve it from API
         country = apiCountryFetch(name)
+        if (country.isNotEmpty()) Log.i(TAG, "\"$name\" retrieved from API")
 
         return country
     }
@@ -138,13 +140,13 @@ class CovidHistManager {
     private fun searchCountry(name: String): List<CovidHistCountry> {
         Log.i(TAG, "Searching for $name")
         for (item in countries) {
-            if (item[0].name.toLowerCase(ROOT) == name.toLowerCase(ROOT)) {
+            if (item.first().name.toLowerCase(ROOT) == name.toLowerCase(ROOT)) {
                 Log.i(TAG, "$name found")
-                Log.i(TAG, item[0].toString())
                 return item
             }
         }
         // On failure return an empty list
+        Log.i(TAG, "\"$name\" not found in memory")
         return emptyList()
 
     }
@@ -157,6 +159,7 @@ class CovidHistManager {
      * @return
      */
     private fun apiCountryFetch(name: String): List<CovidHistCountry> {
+        Log.i(TAG, "Retrieving \"$name\" from country api")
         // Retrofit 2 portion
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.covid19api.com/")
@@ -166,7 +169,6 @@ class CovidHistManager {
         val call = service.getHistCountry(name)
         val response = call.execute()
 
-        Log.i(TAG, "Country response: ${response.code()}")
         // On a good response, return the data
         if (response.code() == 200) return response.body() as List<CovidHistCountry>
         // otherwise return an empty list

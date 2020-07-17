@@ -27,12 +27,4 @@ class MyApp : Application() {
         }
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        // initialize for any
-
-        // Use ApplicationContext.
-        // example: SharedPreferences etc...
-        val context: Context = MyApp.applicationContext()
-    }
 }
