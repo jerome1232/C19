@@ -31,6 +31,7 @@ class HomeFragment : Fragment(), HomeView {
         @Nullable savedInstanceState: Bundle?
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_home, container, false)
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.home)
 
         _viewPager = view.findViewById(R.id.cardViewPager)
         _cardAdapter = CardPageAdapter()
