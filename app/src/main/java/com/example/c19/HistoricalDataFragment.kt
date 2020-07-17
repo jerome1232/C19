@@ -17,6 +17,7 @@ import com.example.c19.view.HistoricalDataView
 import com.example.c19.view.MyXAxisValueFormatter
 import com.example.c19.view.Utils
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -112,6 +113,7 @@ class HistoricalDataFragment :
         val lineData = LineData(dataSet)
         val chart = view?.findViewById<LineChart>(R.id.chart)
         chart?.data = lineData
+        chart?.description?.isEnabled = false
 
         // Configure axis
         chart?.xAxis?.valueFormatter = MyXAxisValueFormatter(referenceDate)
@@ -123,9 +125,9 @@ class HistoricalDataFragment :
 
         // Set title
         if (covidEntities.isNotEmpty()) {
-            view?.findViewById<TextView>(R.id.chartTitle)?.text = covidEntities[0].name
+            view?.findViewById<TextView>(R.id.chartTitle)?.text = covidEntities[0].name + " - Historical Data"
         } else {
-            view?.findViewById<TextView>(R.id.chartTitle)?.text = ""
+            view?.findViewById<TextView>(R.id.chartTitle)?.text = "Nothing matches the search criteria"
         }
     }
 
@@ -142,6 +144,8 @@ class HistoricalDataFragment :
         if ((event?.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
             val search = view?.findViewById<TextInputEditText>(R.id.chart_search)
             _historicalPresenter.getHistoricalData(search?.text.toString())
+            view?.findViewById<TextView>(R.id.chartTitle)?.text =
+                """Searching for ${search?.text.toString()}..."""
             return true
         }
         return false
