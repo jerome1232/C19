@@ -118,22 +118,6 @@ data class GlobalCovid(
 ): CovidEntity()
 
 /**
- * Simple data class to hold Global Covid 19 data
- *
- * @author Jeremy Jones
- *
- * @property global
- * @property data
- */
-data class GlobalCovidSummary (
-
-    @SerializedName("Global")
-    val global: GlobalCovid,
-    @SerializedName("Date")
-    val data: String
-)
-
-/**
  * Custom builds a GlobalCovid object to more closely
  * resemble other data types.
  *

@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Create variables for the different layouts and tie the layout id to them
         setSupportActionBar(toolbar)
-
         navigationView.setNavigationItemSelectedListener(this)
 
 
@@ -76,9 +75,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
-
-
-
 
         when(menuItem.itemId) {
             R.id.home -> {
@@ -116,8 +112,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
             }
-
-
         }
 
         drawerLayout.closeDrawer(GravityCompat.START)
