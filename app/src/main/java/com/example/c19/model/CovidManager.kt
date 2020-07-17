@@ -1,15 +1,10 @@
 package com.example.c19.model
 
-import android.app.Activity
-import android.app.Application
-import android.content.Context
 import android.util.Log
-import com.example.c19.MainActivity
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
-import java.io.PrintWriter
 import java.util.Locale.ROOT
 
 /**
@@ -18,7 +13,6 @@ import java.util.Locale.ROOT
  *
  *  @author Jeremy D. Jones
  *
- * TODO: Add disk load if list is empty
  * TODO: Check timestamp to see if we need to attempt to refresh data
  *
  */
@@ -53,13 +47,12 @@ class CovidManager {
             likely means this is the first run.
             */
             Log.i(TAG, "favorites.dat didn't exist, first run?")
-            if (favorites.isEmpty()) favorites.add("global")
             Log.i(TAG, "Adding \"global\" to favorites")
-            file.writeText(favorites.first())
+            if (favorites.isEmpty()) favorites.add("global")
             Log.i(TAG, "Writing to disk")
+            writeFavorite(favorites.first())
         }
     }
-
 
     /**
      * Retrieves either a state or a country
@@ -69,18 +62,21 @@ class CovidManager {
      * @return
      */
     fun getEntity(entityName: String): CovidEntity? {
+        var entity: CovidEntity? = null
         // First try getting global stats
-        if (entityName.toLowerCase(ROOT) == "global") {
-            if (globalStats != null ) return globalStats
-            globalStats = apiGlobalFetch()
-            return  globalStats
-        }
+        if (entityName == "global") entity = getGlobal()
         // Second try fetching a state
-        var entity : CovidEntity? = getState(entityName)
-        if (entity != null) return entity
-        // if fetching a state failed maybe it's a country
-        entity = getCountry(entityName)
+        if (entity == null) entity = getState(entityName)
+        // Last try fetching a country
+        if (entity == null) entity = getCountry(entityName)
         return entity
+    }
+
+    private fun getGlobal(): GlobalCovid? {
+        var global: GlobalCovid? = null
+        if (globalStats != null) global = globalStats
+        if (global == null) global = apiGlobalFetch()
+        return global
     }
 
     /**
@@ -91,13 +87,6 @@ class CovidManager {
      * @return
      */
     private fun getCountry(country: String): CountryCovid? {
-        /**
-         * TODO If list is empty load from disk
-         */
-        if (countries.isEmpty()) {
-            loadFromDisk()
-        }
-
         // first search list for a country
         var countryCovid = searchCountryList(country)
         if (null != countryCovid) return countryCovid
@@ -116,12 +105,6 @@ class CovidManager {
      * @return returns null on failure, a StateUsCovid object on success
      */
     private fun getState(state: String): StateUsCovid? {
-        /**
-         * TODO: If list is empty load from disk
-         */
-        if (states.isEmpty()) {
-            loadFromDisk()
-        }
         // first search the list for a state
         var stateUsCovid = searchStateList(state)
         if (stateUsCovid != null) return stateUsCovid
@@ -139,6 +122,7 @@ class CovidManager {
      */
     private fun apiGlobalFetch(): GlobalCovid? {
         Log.i(TAG, "Fetching Global Data from API")
+        var global: GlobalCovid? = null
         // Custom Gson Deserializer
         val customGson = GsonBuilder()
             .registerTypeAdapter(GlobalCovid::class.java, GlobalDeserializer())
@@ -151,82 +135,74 @@ class CovidManager {
         val service = retrofit.create(CovidApi::class.java)
         val call = service.getGlobal()
         val response = call.execute()
-
-        Log.i(TAG, "Response: ${response.code()}")
-        Log.i(TAG, response.body().toString())
-        if (response.code() == 200) return response.body()
-        return null
-    }
-    /**
-     * TODO Implement this
-     *
-     */
-    private fun loadFromDisk() {
-        // stub
+        if (response.code() == 200) global = response.body()
+        return global
     }
 
     /**
      * apiStateFetch fetches data from the api
      *
      * @author Jeremy D. Jones
-     * @param state
+     * @param name
      */
-    private fun apiStateFetch(state: String ): StateUsCovid? {
-        Log.i(TAG, "Making request to get $state")
+    private fun apiStateFetch(name: String ): StateUsCovid? {
+        var state: StateUsCovid? = null
+        Log.i(TAG, "Making request to get $name")
         val retrofit = Retrofit.Builder()
             .baseUrl("https://corona.lmao.ninja/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val service = retrofit.create(CovidApi::class.java)
-        val call = service.getState(state)
+        val call = service.getState(name)
         val response = call.execute()
-        if (response.code() == 200) return response.body()
-        return null
+        if (response.code() == 200) state = response.body()
+        return state
     }
 
     /**
      * searches list for a given state
      *
      * @author Jeremy D. Jones
-     * @param state
+     * @param name
      * @return
      */
-    private fun searchStateList(state: String ): StateUsCovid? {
-        Log.i(TAG, "Searching for $state")
+    private fun searchStateList(name: String ): StateUsCovid? {
+        var state: StateUsCovid? = null
+        Log.i(TAG, "Searching for $name")
         for (item in states) {
-            if (item.name.toLowerCase(ROOT) == state.toLowerCase(ROOT)) {
-                Log.i(TAG, "$state found")
-                Log.i(TAG, item.toString())
+            if (item.name.toLowerCase(ROOT) == name.toLowerCase(ROOT)) {
                 /**
                  * TODO: Check timestamp to see if data is super fresh
                  * I'll want to attempt to get fresh data, and if we can't get fresh data
                  * resort to using the old data.
                  */
-                return item
+                Log.i(TAG, "State found")
+                state = item
             }
         }
-    return null
+    return state
     }
 
     /**
      * Fetches a country from API
      *
      * @author Jeremy D. Jones
-     * @param country
+     * @param name
      * @return
      */
-    private fun apiCountryFetch(country: String): CountryCovid? {
-        Log.i(TAG, "Making request to get $country")
+    private fun apiCountryFetch(name: String): CountryCovid? {
+        var country: CountryCovid? = null
+        Log.i(TAG, "Making request to get $name")
         val retrofit = Retrofit.Builder()
             .baseUrl("https://corona.lmao.ninja/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val service = retrofit.create(CovidApi::class.java)
-        val call = service.getCountry(country)
+        val call = service.getCountry(name)
         val response = call.execute()
         Log.i(TAG, "Response code: ${response.code()}")
-        if (response.code() == 200) return response.body()
-        return null
+        if (response.code() == 200) country = response.body()
+        return country
     }
 
     /**
@@ -236,20 +212,22 @@ class CovidManager {
      * @param country
      * @return
      */
-    private fun searchCountryList(country: String): CountryCovid? {
-        Log.i(TAG, "Searching for $country")
+    private fun searchCountryList(name: String): CountryCovid? {
+        Log.i(TAG, "Searching for $name")
+        var country: CountryCovid? = null
         for (item in countries) {
-            if (item.name.toLowerCase(ROOT) == country.toLowerCase(ROOT)) {
+            if (item.name.toLowerCase(ROOT) == name.toLowerCase(ROOT)) {
                 Log.i(TAG, "$country found")
                 Log.i(TAG, item.toString())
                 /**
                  * TODO: Check timestamp to see if data is super fresh
                  */
-                return item
+                Log.i(TAG,"Country found in list")
+                country = item
+                break
             }
         }
-        Log.i(TAG, "Nothing found")
-        return null
+        return country
     }
 
     /**
@@ -260,5 +238,27 @@ class CovidManager {
      */
     fun getFavorites(): List<CovidEntity?> {
         return favorites.map { getEntity(it) }
+    }
+
+    fun addFavorite(name: String) {
+        Log.i(TAG, "Adding $name to favorites list")
+        favorites.add(name)
+        Log.i(TAG, "Saving updated favorite list to file")
+        writeFavorite(favorites.last())
+    }
+
+    private fun writeFavorite(name: String) {
+        file.appendText(name)
+        file.appendText("\n")
+    }
+
+    fun delFavorite(name: String) {
+        Log.i(TAG, "Deleting $name from favorites list")
+        favorites.remove(name)
+        Log.i(TAG, "Saving updated favorite list to file")
+        // Because this is simple, clearing the file first
+        file.writeText("")
+        // Now writing the new file to disk
+        favorites.map { writeFavorite(it) }
     }
 }
