@@ -280,6 +280,7 @@ class CovidManager {
     }
 
     fun isFavorite(name: String) : Boolean {
-        return favorites.contains(name)
+        Log.i(TAG, "$name is fav: ${favorites.contains(name.toLowerCase(ROOT))}")
+        return favorites.contains(name.toLowerCase(ROOT))
     }
 }

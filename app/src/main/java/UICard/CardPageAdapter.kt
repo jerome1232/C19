@@ -1,5 +1,6 @@
 package UICard
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -119,6 +120,9 @@ class CardPageAdapter(favoritesPresenter: FavoritesPresenter) : PagerAdapter(), 
         }
 
         val toggleButton = cardLayout.findViewById<ToggleButton>(R.id.btnToggleFavorite)
+        Log.i("Card", _favoritesPresenter.isFavorite(title.text.toString()).toString())
+        if ( _favoritesPresenter is HomePresenter &&
+            _favoritesPresenter.isFavorite(title.text.toString())) toggleButton.isChecked = true
         toggleButton.setOnClickListener {
             if (toggleButton.isChecked) {
                 _favoritesPresenter.addFavorite(title.text.toString())
