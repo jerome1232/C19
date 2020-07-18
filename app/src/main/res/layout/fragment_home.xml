@@ -18,11 +18,11 @@
        android:paddingEnd="5dp"
        android:paddingLeft="15dp"
        android:paddingRight="15dp"
-       android:paddingStart="16dp">
+       android:paddingStart="5dp">
     </androidx.viewpager.widget.ViewPager>
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabDots"
+        android:id="@+id/tabDotsHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cardViewPager"

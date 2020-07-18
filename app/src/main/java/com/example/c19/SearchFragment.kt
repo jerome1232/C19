@@ -16,6 +16,7 @@ import com.example.c19.presenter.HomePresenterImpl
 import com.example.c19.presenter.SearchPresenterImpl
 import com.example.c19.view.HomeView
 import com.example.c19.view.SearchView
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.card.*
 
 /**
@@ -55,6 +56,9 @@ class SearchFragment : Fragment(), View.OnClickListener, SearchView {
         _viewPager?.adapter = _cardAdapter
         _viewPager?.setPageTransformer(false, _CardShadowTransformer)
         _viewPager?.offscreenPageLimit = 3
+
+        val tabLayout = view.findViewById<TabLayout>(R.id.tabDotsSearch)
+        tabLayout.setupWithViewPager(_viewPager,true)
 
         val btnGo = view.findViewById<Button>(R.id.btn_go)
         btnGo.setOnClickListener(this)

@@ -53,7 +53,7 @@ class HomeFragment : Fragment(), HomeView {
         _viewPager?.setPageTransformer(false, _CardShadowTransformer)
         _viewPager?.offscreenPageLimit = 3
 
-        val tabLayout = view.findViewById<TabLayout>(R.id.tabDots)
+        val tabLayout = view.findViewById<TabLayout>(R.id.tabDotsHome)
         tabLayout.setupWithViewPager(_viewPager,true)
 
 
