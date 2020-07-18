@@ -69,17 +69,6 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
         }
     }
 
-    /**
-     * REMOVE ME WHENEVER. Just used for testing.
-     */
-
-    fun getEntity(entityName : String) : CovidEntity? {
-
-        val entity : CovidEntity? = _covidStateManager.getEntity(entityName)
-
-        return entity
-    }
-
     private fun unixTimeStampToString(unixTimeStamp: Long): String {
         val df = Date(unixTimeStamp)
         return SimpleDateFormat("yyyy-dd-MM").format(df)
