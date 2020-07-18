@@ -247,7 +247,7 @@ class CovidManager {
      */
     fun addFavorite(name: String) {
         Log.i(TAG, "Adding \"$name\" to favorites list")
-        favorites.add(name)
+        favorites.add(name.toLowerCase(ROOT))
         Log.i(TAG, "Saving updated favorite list to file")
         writeFavorite(favorites.last())
     }
@@ -271,7 +271,7 @@ class CovidManager {
      */
     fun delFavorite(name: String) {
         Log.i(TAG, "Deleting \"$name\" from favorites list")
-        favorites.remove(name)
+        favorites.remove(name.toLowerCase(ROOT))
         Log.i(TAG, "Saving updated favorite list to file")
         // Because this is simple, clearing the file first
         file.writeText("")
@@ -281,6 +281,7 @@ class CovidManager {
 
     fun isFavorite(name: String) : Boolean {
         Log.i(TAG, "$name is fav: ${favorites.contains(name.toLowerCase(ROOT))}")
+        Log.i(TAG, favorites.toString())
         return favorites.contains(name.toLowerCase(ROOT))
     }
 }
