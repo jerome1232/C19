@@ -21,22 +21,16 @@
        android:paddingStart="30dp">
     </androidx.viewpager.widget.ViewPager>
 
-    <Button
-        android:id="@+id/btnUpdate"
-        android:layout_width="178dp"
-        android:layout_height="63dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="110dp"
-        android:background="@color/colorPrimary"
-        android:onClick="dataCountryTest"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:text="Update"
-        android:textColor="#ffffff"
-        android:textSize="20sp">
-
-    </Button>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabDots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cardViewPager"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="6dp"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp" />
 
 
 </RelativeLayout>
