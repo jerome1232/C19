@@ -51,10 +51,41 @@ class SearchPresenterImpl(covidManager: CovidManager, searchView: SearchView) : 
                 )
             }
             uiThread {
-                _searchView.drawCard(entityMap)
+                _searchView.drawCard(entityMap, entityName)
             }
         }
 
+    }
+
+    /**
+     * Adds a favorite to favorites list
+     *
+     * @author Jeremy D. Jones
+     * @param name
+     */
+    fun addFavorite(name: String) {
+        _covidManager.addFavorite(name)
+    }
+
+    /**
+     * Checks whether something is a favorite or not
+     *
+     * @author Jeremy D. Jones
+     * @param name
+     * @return
+     */
+    fun isFavorite(name: String) : Boolean {
+        return _covidManager.isFavorite(name)
+    }
+
+    /**
+     * Removes a favorite from the favorite list
+     *
+     * @author Jeremy D. Jones
+     * @param name
+     */
+    fun delFavorite(name: String) {
+        _covidManager.delFavorite(name)
     }
 
     private fun unixTimeStampToString(unixTimeStamp: Long): String {

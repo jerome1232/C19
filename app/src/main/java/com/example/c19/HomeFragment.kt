@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ToggleButton
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
@@ -25,6 +26,7 @@ class HomeFragment : Fragment(), HomeView {
     private var _CardShadowTransformer: ShadowTransformer? = null
     private var _FragmentCardAdapter: CardFragmentPageAdapter? = null
     private var _FragmentCardShadowTransformer: ShadowTransformer? = null
+    val toggleButton = view?.findViewById<ToggleButton>(R.id.btnToggleFavorite)
 
     override fun onCreateView(
         inflater: LayoutInflater, @Nullable container: ViewGroup?,
@@ -48,8 +50,11 @@ class HomeFragment : Fragment(), HomeView {
         _viewPager?.offscreenPageLimit = 3
 
 
+
+
         return view
     }
+
 
     companion object {
         fun dpToPixels(dp: Int, context: HomeFragment): Float {

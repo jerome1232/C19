@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.c19.model.*
+import com.example.c19.presenter.HomePresenter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
@@ -75,7 +76,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Needed for GPS data
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        val toggleButton = findViewById<ToggleButton>(R.id.btnToggleFavorite)
+
     }
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
