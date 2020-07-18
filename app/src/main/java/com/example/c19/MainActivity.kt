@@ -9,14 +9,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.c19.model.*
@@ -25,6 +23,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_toolbar.*
+import kotlinx.android.synthetic.main.fragment_search.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.util.*
@@ -38,6 +37,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var settingsFragment: SettingsFragment
     // Needed for GPS data
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var loc = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -151,18 +151,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Toast.makeText(this, "Button Test Successful",  Toast.LENGTH_SHORT).show()
     }
 
+    /**
+     * Populates search fragment search bar
+     * with gps based location
+     *
+     * @param view
+     */
+    fun searchFragGps(view: View) {
+        val name = gpsRequest()
+        searchInputBar.setText(name)
+    }
 
     /**
      * Get's the devices last known location and finds
      * the users country/state using that information
      *
      * @author Jeremy D. Jones
-     * @param view
      */
-    fun gpsRequest(view: View) {
+    fun gpsRequest() : String {
         val TAG = "gpsRequest"
         val RECORD_REQUEST_CODE = 101
-        var name: String
         val searchInputBar = findViewById<EditText>(R.id.searchInputBar)
 
         // Checking to see if we have permission to use location services.
@@ -176,7 +184,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
                 RECORD_REQUEST_CODE
             )
-            return
+            return ""
         }
         // requesting the last known location
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
@@ -189,20 +197,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             // If we got a location, get the country, if it's the USA, get the state
             if (location != null) {
                 addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                name = addresses.get(0).countryName
-                if (name == "United States") name = addresses.get(0).adminArea
-                Toast.makeText(this, "Location: $name", Toast.LENGTH_SHORT).show()
-
-
-                searchInputBar.setText(name)
+                loc = addresses.get(0).countryName
+                if (loc == "United States") loc = addresses.get(0).adminArea
+                Log.i("gpsrequest01", loc)
             } else {
                 Toast.makeText(this, "No location data", Toast.LENGTH_SHORT).show()
             }
         }
-
-
-
-        return
+        Log.i("GPSRequest", loc)
+        return loc
     }
 
 
