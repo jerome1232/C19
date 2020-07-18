@@ -5,9 +5,15 @@ package com.example.c19.presenter
  *
  * @author Rodrigo Iturralde
  */
-interface HomePresenter {
+interface HomePresenter: FavoritesPresenter {
     /**
      * Request for favorites
      */
-    fun getFavorites()
+    override fun getFavorites()
+
+    override fun addFavorite(name: String)
+
+    override fun isFavorite(name: String) : Boolean
+
+    override fun delFavorite(name: String)
 }

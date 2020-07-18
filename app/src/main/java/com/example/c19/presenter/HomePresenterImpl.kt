@@ -82,7 +82,7 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
      * @author Jeremy D. Jones
      * @param name
      */
-    fun addFavorite(name: String) {
+    override fun addFavorite(name: String) {
         _covidStateManager.addFavorite(name)
     }
 
@@ -93,7 +93,7 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
      * @param name
      * @return
      */
-    fun isFavorite(name: String) : Boolean {
+    override fun isFavorite(name: String) : Boolean {
         return _covidStateManager.isFavorite(name)
     }
 
@@ -103,7 +103,7 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
      * @author Jeremy D. Jones
      * @param name
      */
-    fun delFavorite(name: String) {
+    override fun delFavorite(name: String) {
         _covidStateManager.delFavorite(name)
     }
 

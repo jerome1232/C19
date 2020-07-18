@@ -12,7 +12,9 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.c19.model.CovidManager
+import com.example.c19.presenter.HomePresenterImpl
 import com.example.c19.presenter.SearchPresenterImpl
+import com.example.c19.view.HomeView
 import com.example.c19.view.SearchView
 import kotlinx.android.synthetic.main.card.*
 
@@ -42,7 +44,7 @@ class SearchFragment : Fragment(), View.OnClickListener, SearchView {
         val view : View = inflater.inflate(R.layout.fragment_search, container, false)
 
         _viewPager = view.findViewById(R.id.cardSearchViewPager)
-        _cardAdapter = CardPageAdapter()
+        _cardAdapter = CardPageAdapter(_searchPresenter)
         _FragmentCardAdapter = CardFragmentPageAdapter(
             fragmentManager,
             dpToPixels(2, this)
@@ -125,11 +127,20 @@ class SearchFragment : Fragment(), View.OnClickListener, SearchView {
     }
 
     override fun drawCard(entityMap : kotlin.collections.Map<String, Any?>, entityName: String) {
-        _cardAdapter!!.addCardItem(entityMap)
-        _cardAdapter!!.notifyDataSetChanged()
+        if (entityMap.isNotEmpty()) {
+            _cardAdapter!!.addCardItem(entityMap)
+            _cardAdapter!!.notifyDataSetChanged()
+        }
+    }
 
-       // TODO: Figure out why favorite button doesn't toast after searching for multiple cards and saving them.
-        toggleFavoriteButton(entityName)
+    override fun showAdded(name: String) {
+        Toast.makeText(activity?.applicationContext, "$name added to Favorites", Toast.LENGTH_SHORT)
+            .show()
+    }
+
+    override fun showDeleted(name: String) {
+        Toast.makeText(activity?.applicationContext, "$name removed from Favorites", Toast.LENGTH_SHORT)
+            .show()
     }
 
 }

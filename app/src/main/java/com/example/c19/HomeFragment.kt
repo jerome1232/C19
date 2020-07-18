@@ -38,7 +38,7 @@ class HomeFragment : Fragment(), HomeView {
         (activity as MainActivity).supportActionBar?.title = getString(R.string.home)
 
         _viewPager = view.findViewById(R.id.cardViewPager)
-        _cardAdapter = CardPageAdapter()
+        _cardAdapter = CardPageAdapter(_homePresenter)
 
         _homePresenter.getFavorites()
         _FragmentCardAdapter = CardFragmentPageAdapter(
