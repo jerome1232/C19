@@ -54,7 +54,7 @@ class SearchFragment : Fragment(), View.OnClickListener, SearchView {
         _viewPager?.offscreenPageLimit = 3
 
         val btnGo = view.findViewById<Button>(R.id.btn_go)
-        val name = btnGo.setOnClickListener(this)
+        btnGo.setOnClickListener(this)
 
 
         return view
@@ -128,6 +128,7 @@ class SearchFragment : Fragment(), View.OnClickListener, SearchView {
         _cardAdapter!!.addCardItem(entityMap)
         _cardAdapter!!.notifyDataSetChanged()
 
+       // TODO: Figure out why favorite button doesn't toast after searching for multiple cards and saving them.
         toggleFavoriteButton(entityName)
     }
 

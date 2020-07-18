@@ -15,10 +15,13 @@ import androidx.viewpager.widget.ViewPager
 import com.example.c19.model.CovidManager
 import com.example.c19.presenter.HomePresenterImpl
 import com.example.c19.view.HomeView
+import kotlinx.android.synthetic.main.card.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class HomeFragment : Fragment(), HomeView {
+
+    // TODO: Make favorite button always on for those cards in the favorite list.
 
     private val _homePresenter = HomePresenterImpl(CovidManager(), this)
     private var _viewPager: ViewPager? = null
@@ -26,7 +29,6 @@ class HomeFragment : Fragment(), HomeView {
     private var _CardShadowTransformer: ShadowTransformer? = null
     private var _FragmentCardAdapter: CardFragmentPageAdapter? = null
     private var _FragmentCardShadowTransformer: ShadowTransformer? = null
-    val toggleButton = view?.findViewById<ToggleButton>(R.id.btnToggleFavorite)
 
     override fun onCreateView(
         inflater: LayoutInflater, @Nullable container: ViewGroup?,
@@ -65,7 +67,9 @@ class HomeFragment : Fragment(), HomeView {
     }
 
     override fun drawFavorites(favorites: List<Map<String, Any?>>) {
-        favorites.forEach { favorite ->  _cardAdapter!!.addCardItem(favorite)}
+        favorites.forEach {
+                favorite ->  _cardAdapter!!.addCardItem(favorite)
+        }
         _cardAdapter!!.notifyDataSetChanged()
     }
 }
