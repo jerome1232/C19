@@ -278,4 +278,8 @@ class CovidManager {
         // Now writing the new file to disk
         favorites.map { writeFavorite(it) }
     }
+
+    fun isFavorite(name: String) : Boolean {
+        return favorites.contains(name)
+    }
 }
