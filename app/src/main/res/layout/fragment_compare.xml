@@ -5,12 +5,106 @@
     android:layout_height="match_parent"
     tools:context=".CompareFragment">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Compare Fragment"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:layout_centerInParent="true"/>
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="65dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColorHint="@color/colorPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/compare1_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Search for a country/state"
+                    android:shadowColor="#FFFFFF"
+                    android:singleLine="true"
+                    android:imeOptions="actionSearch" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColorHint="@color/colorPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/compare2_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Search for a country/state"
+                    android:shadowColor="#FFFFFF"
+                    android:singleLine="true"
+                    android:imeOptions="actionSearch" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/compare_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:entries="@array/datasets"
+            android:spinnerMode="dropdown"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/compare_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/colorPrimary"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="Compare"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+
+        <TextView
+            android:id="@+id/compare_title"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:foregroundGravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="title"
+            android:textAlignment="center" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/compare_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp">
+
+        </com.github.mikephil.charting.charts.LineChart>
+
+
+    </LinearLayout>
 
 </RelativeLayout>
