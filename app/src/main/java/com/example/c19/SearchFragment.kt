@@ -42,6 +42,7 @@ class SearchFragment : Fragment(), View.OnClickListener, SearchView {
         savedInstanceState: Bundle?
     ): View? {
         val view : View = inflater.inflate(R.layout.fragment_search, container, false)
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.search)
 
         _viewPager = view.findViewById(R.id.cardSearchViewPager)
         _cardAdapter = CardPageAdapter(_searchPresenter)
