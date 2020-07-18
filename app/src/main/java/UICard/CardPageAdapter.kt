@@ -12,6 +12,7 @@ import androidx.viewpager.widget.PagerAdapter
 import com.example.c19.R
 import com.example.c19.presenter.FavoritesPresenter
 import com.example.c19.presenter.HomePresenter
+import com.example.c19.presenter.SearchPresenter
 import org.jetbrains.annotations.NotNull
 
 class CardPageAdapter(favoritesPresenter: FavoritesPresenter) : PagerAdapter(), CardAdapter {
@@ -121,7 +122,7 @@ class CardPageAdapter(favoritesPresenter: FavoritesPresenter) : PagerAdapter(), 
 
         val toggleButton = cardLayout.findViewById<ToggleButton>(R.id.btnToggleFavorite)
         Log.i("Card", _favoritesPresenter.isFavorite(title.text.toString()).toString())
-        if ( _favoritesPresenter is HomePresenter &&
+        if ( (_favoritesPresenter is HomePresenter || _favoritesPresenter is SearchPresenter) &&
             _favoritesPresenter.isFavorite(title.text.toString())) toggleButton.isChecked = true
         toggleButton.setOnClickListener {
             if (toggleButton.isChecked) {
