@@ -109,8 +109,6 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
                 _homeView.removeFavorite(name)
             }
         }
-
-
     }
 
     private fun unixTimeStampToString(unixTimeStamp: Long): String {
