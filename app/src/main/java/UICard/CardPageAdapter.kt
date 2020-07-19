@@ -15,6 +15,10 @@ import com.example.c19.presenter.HomePresenter
 import com.example.c19.presenter.SearchPresenter
 import org.jetbrains.annotations.NotNull
 
+/**
+ * This custom adapter gets API information from the presenter of each fragment that uses it
+ * and formats it for the view, in conjunction with a viewPager.
+ */
 class CardPageAdapter(favoritesPresenter: FavoritesPresenter) : PagerAdapter(), CardAdapter {
 
     private val _favoritesPresenter = favoritesPresenter

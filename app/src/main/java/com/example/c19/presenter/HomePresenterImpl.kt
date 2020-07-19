@@ -69,13 +69,6 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
         }
     }
 
-    fun getEntity(entityName : String) : CovidEntity? {
-
-        val entity : CovidEntity? = _covidStateManager.getEntity(entityName)
-
-        return entity
-    }
-
     /**
      * Adds a favorite to favorites list
      *

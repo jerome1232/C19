@@ -6,6 +6,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
+/**
+ * Adapter for the CardFragments
+ *
+ * @author Chase Moses
+ */
+
 class CardFragmentPageAdapter(fm : FragmentManager?, baseElevation : Float)
     : FragmentStatePagerAdapter(fm!! , BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT), CardAdapter {
 
