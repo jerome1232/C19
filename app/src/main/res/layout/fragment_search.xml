@@ -13,8 +13,8 @@
         android:layout_height="54dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="35dp"
+        android:layout_marginTop="71dp"
+        android:layout_marginEnd="19dp"
         android:background="@color/colorSecondary"
         android:onClick="searchFragGps"
         android:tint="@color/colorPrimaryDark"
@@ -22,7 +22,7 @@
 
     <EditText
         android:id="@+id/searchInputBar"
-        android:layout_width="247dp"
+        android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -35,18 +35,17 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/cardSearchViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="426dp"
-        android:layout_alignParentStart="true"
+        android:layout_width="411dp"
+        android:layout_height="429dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginBottom="35dp"
+        android:layout_marginStart="-3dp"
+        android:layout_marginBottom="2dp"
         android:clipToPadding="false"
         android:foregroundGravity="center"
         android:overScrollMode="never"
-        android:paddingStart="30dp"
+        android:paddingStart="5dp"
         android:paddingLeft="30dp"
-        android:paddingEnd="30dp"
+        android:paddingEnd="5dp"
         android:paddingRight="30dp"
         android:paddingBottom="30dp" />
 
@@ -57,13 +56,22 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="74dp"
-        android:layout_marginEnd="88dp"
+        android:layout_marginEnd="62dp"
         android:background="#B70BB823"
         android:bottomLeftRadius="10dp"
         android:bottomRightRadius="10dp"
-        android:onClick="btnGetCard"
         android:text="GO"
         android:textColor="#FFFFFF"
         android:topLeftRadius="10dp"
         android:topRightRadius="10dp" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabDotsSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="6dp"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp" />
 </RelativeLayout>

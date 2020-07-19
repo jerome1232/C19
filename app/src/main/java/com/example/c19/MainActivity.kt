@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var homeFragment: HomeFragment
     lateinit var compareFragment: CompareFragment
     lateinit var historicalDataFragment: HistoricalDataFragment
-    lateinit var settingsFragment: SettingsFragment
     // Needed for GPS data
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var loc = ""
@@ -109,14 +108,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .commit()
             }
 
-            R.id.settings -> {
-                settingsFragment = SettingsFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.container_fragment, settingsFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
-            }
         }
 
         drawerLayout.closeDrawer(GravityCompat.START)
@@ -147,9 +138,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         transaction.replace(R.id.container_fragment, searchFragment)
         transaction.addToBackStack(null)
         transaction.commit()
-
-
-        Toast.makeText(this, "Button Test Successful",  Toast.LENGTH_SHORT).show()
     }
 
     /**
@@ -206,86 +194,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
     }
-
-
-    /**
-     * TODO REMOVE ME AT WILL
-     *
-     * I'm just here for testing
-     *
-     * @param view
-     */
-    fun dataCountryTest(view: View) {
-        val manager = CovidManager()
-        val hManager = CovidHistManager()
-        doAsync {
-            val country = manager.getEntity("Bolivia")
-            uiThread {
-                if (country is CountryCovid) {
-                    println(country.name)
-                }
-                Log.i("dataTest", country.toString())
-            }
-        }
-        doAsync {
-            val state = manager.getEntity("Idaho")
-            uiThread {
-                if (state is StateUsCovid) {
-                    println(state.name)
-                }
-                Log.i("dataTest", state.toString())
-            }
-        }
-        doAsync {
-            val globalStats = manager.getEntity("global")
-            uiThread {
-                if (globalStats is GlobalCovid) {
-                    Log.i("dataTest", globalStats.newRecovered.toString())
-                }
-                Log.i("dataTest", globalStats.toString())
-            }
-        }
-        doAsync {
-            val test = hManager.getHistEntity("Idaho")
-            uiThread {
-                if (test.isNotEmpty()) {
-                    if (test[0] is CovidHistState) {
-                        Log.i("dataTest", test[0].name)
-                    }
-                }
-                Log.i("dataTest", test.toString())
-                var i = 0
-                for (item in test) {
-                    if (item is CovidHistState) {
-                        Log.i("DataTest", i++.toString())
-                        Log.i("DataTest", item.name)
-                        Log.i("DataTest", item.confirmed.toString())
-                        Log.i("DataTest", item.date)
-                    }
-                }
-            }
-        }
-        doAsync {
-            val test = hManager.getHistEntity("Idaho")
-            uiThread {
-                if (test.isNotEmpty()) {
-                    if (test[0] is CovidHistCountry) {
-                        Log.i("dataTest", test[0].name)
-                    }
-                }
-                Log.i("dataTest", test.toString())
-                var i = 0
-                for (item in test) {
-                    if (item is CovidHistCountry) {
-                        Log.i("DataTest", i++.toString())
-                        Log.i("DataTest", item.name)
-                        Log.i("DataTest", item.confirmed.toString())
-                        Log.i("DataTest", item.date)
-                    }
-                }
-            }
-        }
-    }
-
 
 }

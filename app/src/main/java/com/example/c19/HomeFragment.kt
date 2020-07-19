@@ -16,13 +16,13 @@ import androidx.viewpager.widget.ViewPager
 import com.example.c19.model.CovidManager
 import com.example.c19.presenter.HomePresenterImpl
 import com.example.c19.view.HomeView
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.card.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class HomeFragment : Fragment(), HomeView {
 
-    // TODO: Make favorite button always on for those cards in the favorite list.
 
     private val _homePresenter = HomePresenterImpl(CovidManager(), this)
     private var _viewPager: ViewPager? = null
@@ -52,6 +52,8 @@ class HomeFragment : Fragment(), HomeView {
         _viewPager?.setPageTransformer(false, _CardShadowTransformer)
         _viewPager?.offscreenPageLimit = 3
 
+        val tabLayout = view.findViewById<TabLayout>(R.id.tabDotsHome)
+        tabLayout.setupWithViewPager(_viewPager,true)
 
 
 
