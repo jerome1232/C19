@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var homeFragment: HomeFragment
     lateinit var compareFragment: CompareFragment
     lateinit var historicalDataFragment: HistoricalDataFragment
-    lateinit var settingsFragment: SettingsFragment
     // Needed for GPS data
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var loc = ""
@@ -109,14 +108,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .commit()
             }
 
-            R.id.settings -> {
-                settingsFragment = SettingsFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.container_fragment, settingsFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
-            }
         }
 
         drawerLayout.closeDrawer(GravityCompat.START)

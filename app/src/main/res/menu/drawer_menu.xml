@@ -20,11 +20,6 @@
            android:title="@string/historical_data"
            android:icon="@drawable/ic_baseline_insert_chart_24"/>
 
-       <item
-           android:id="@+id/settings"
-           android:title="@string/settings"
-           android:icon="@drawable/ic_baseline_settings_24"/>
-
     </group>
 
 </menu>
