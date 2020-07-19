@@ -130,7 +130,9 @@ class CardPageAdapter(favoritesPresenter: FavoritesPresenter) : PagerAdapter(), 
             names[i].visibility = View.GONE
             values[i].visibility = View.GONE
             dividers[i].visibility = View.GONE
+            dividers[i - 1].visibility = View.INVISIBLE
         }
+        dividers.last().visibility = View.INVISIBLE
 
         val toggleButton = cardLayout.findViewById<ToggleButton>(R.id.btnToggleFavorite)
         Log.i("Card", _favoritesPresenter.isFavorite(title.text.toString()).toString())
