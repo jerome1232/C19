@@ -8,16 +8,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import android.widget.ToggleButton
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.c19.model.CovidManager
 import com.example.c19.presenter.HomePresenterImpl
 import com.example.c19.view.HomeView
+import kotlinx.android.synthetic.main.card.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class HomeFragment : Fragment(), HomeView {
+
+    // TODO: Make favorite button always on for those cards in the favorite list.
 
     private val _homePresenter = HomePresenterImpl(CovidManager(), this)
     private var _viewPager: ViewPager? = null
@@ -34,7 +39,7 @@ class HomeFragment : Fragment(), HomeView {
         (activity as MainActivity).supportActionBar?.title = getString(R.string.home)
 
         _viewPager = view.findViewById(R.id.cardViewPager)
-        _cardAdapter = CardPageAdapter()
+        _cardAdapter = CardPageAdapter(_homePresenter)
 
         _homePresenter.getFavorites()
         _FragmentCardAdapter = CardFragmentPageAdapter(
@@ -48,8 +53,11 @@ class HomeFragment : Fragment(), HomeView {
         _viewPager?.offscreenPageLimit = 3
 
 
+
+
         return view
     }
+
 
     companion object {
         fun dpToPixels(dp: Int, context: HomeFragment): Float {
@@ -60,7 +68,16 @@ class HomeFragment : Fragment(), HomeView {
     }
 
     override fun drawFavorites(favorites: List<Map<String, Any?>>) {
-        favorites.forEach { favorite ->  _cardAdapter!!.addCardItem(favorite)}
+        favorites.forEach {
+                favorite ->  _cardAdapter!!.addCardItem(favorite)
+        }
         _cardAdapter!!.notifyDataSetChanged()
+    }
+
+    override fun removeFavorite(name: String) {
+        _cardAdapter!!.removeCardItem(name)
+        _cardAdapter!!.notifyDataSetChanged()
+        Toast.makeText(activity?.applicationContext, "$name removed from Favorites", Toast.LENGTH_SHORT)
+            .show()
     }
 }

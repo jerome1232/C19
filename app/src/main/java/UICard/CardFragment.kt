@@ -9,6 +9,10 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.example.c19.R
 
+/**
+ * Creating a card as a fragment, and tying in the card layout to it.
+ * @author Chase Moses
+ */
 class CardFragment : Fragment() {
 
     private var _cardView : CardView? = null
@@ -30,5 +34,3 @@ class CardFragment : Fragment() {
 
     fun getCardView() : CardView? {return _cardView}
 }
-
-// Check Card Fragment in other file to see differences if app doesn't work

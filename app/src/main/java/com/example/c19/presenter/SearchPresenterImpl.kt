@@ -11,13 +11,12 @@ class SearchPresenterImpl(covidManager: CovidManager, searchView: SearchView) : 
 
     private val _covidManager : CovidManager = covidManager
     private val _searchView : SearchView = searchView
-    private lateinit var entityMap : Map<String, Any?>
 
     override fun getEntity(entityName : String) {
         doAsync {
 
             val entity : CovidEntity? = _covidManager.getEntity(entityName)
-
+            var entityMap = mapOf<String, Any?>()
             if(entity is GlobalCovid) {
                   entityMap = mapOf<String, Any?>(
                     "title" to "Global",
@@ -51,10 +50,54 @@ class SearchPresenterImpl(covidManager: CovidManager, searchView: SearchView) : 
                 )
             }
             uiThread {
-                _searchView.drawCard(entityMap)
+                _searchView.drawCard(entityMap, entityName)
             }
         }
 
+    }
+
+    override fun getFavorites() {
+    }
+
+    /**
+     * Adds a favorite to favorites list
+     *
+     * @author Jeremy D. Jones
+     * @param name
+     */
+    override fun addFavorite(name: String) {
+        doAsync {
+            _covidManager.addFavorite(name)
+            uiThread {
+                _searchView.showAdded(name)
+            }
+        }
+    }
+
+    /**
+     * Checks whether something is a favorite or not
+     *
+     * @author Jeremy D. Jones
+     * @param name
+     * @return
+     */
+    override fun isFavorite(name: String) : Boolean {
+        return _covidManager.isFavorite(name)
+    }
+
+    /**
+     * Removes a favorite from the favorite list
+     *
+     * @author Jeremy D. Jones
+     * @param name
+     */
+    override fun delFavorite(name: String) {
+        doAsync {
+            _covidManager.delFavorite(name)
+            uiThread {
+                _searchView.showDeleted(name)
+            }
+        }
     }
 
     private fun unixTimeStampToString(unixTimeStamp: Long): String {

@@ -1,18 +1,23 @@
 package UICard
 
-import android.app.ActionBar
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.example.c19.R
+import com.example.c19.presenter.FavoritesPresenter
+import com.example.c19.presenter.HomePresenter
+import com.example.c19.presenter.SearchPresenter
 import org.jetbrains.annotations.NotNull
 
-class CardPageAdapter() : PagerAdapter(), CardAdapter {
+class CardPageAdapter(favoritesPresenter: FavoritesPresenter) : PagerAdapter(), CardAdapter {
 
+    private val _favoritesPresenter = favoritesPresenter
     private var cards : MutableList<Map<String, Any?>>
     private var cardViews : MutableList<CardView?>
     private var mBaseElevation = 0f
@@ -22,6 +27,14 @@ class CardPageAdapter() : PagerAdapter(), CardAdapter {
         cards.add(cardData)
         cardViews.add(null)
 
+    }
+
+    fun removeCardItem(name: String) {
+        cards.removeAll { card -> card["title"] == name }
+    }
+
+    override fun getItemPosition(`object`: Any): Int {
+        return POSITION_NONE
     }
 
     override fun getBaseElevation(): Float {
@@ -70,6 +83,7 @@ class CardPageAdapter() : PagerAdapter(), CardAdapter {
     private fun bind(cardInfo : Map<String, Any?>, view : View) {
 
         val title = view.findViewById<TextView>(R.id.cardTitle)
+
         val names = listOf<TextView>(
             view.findViewById(R.id.name1),
             view.findViewById(R.id.name2),
@@ -112,9 +126,21 @@ class CardPageAdapter() : PagerAdapter(), CardAdapter {
             names[i].visibility = View.GONE
             values[i].visibility = View.GONE
             dividers[i].visibility = View.GONE
-            // reduce the card height
-            cardLayout.layoutParams.height = cardLayout.layoutParams.height - 140
         }
+
+        val toggleButton = cardLayout.findViewById<ToggleButton>(R.id.btnToggleFavorite)
+        Log.i("Card", _favoritesPresenter.isFavorite(title.text.toString()).toString())
+        if ( (_favoritesPresenter is HomePresenter || _favoritesPresenter is SearchPresenter) &&
+            _favoritesPresenter.isFavorite(title.text.toString())) toggleButton.isChecked = true
+        toggleButton.setOnClickListener {
+            if (toggleButton.isChecked) {
+                _favoritesPresenter.addFavorite(title.text.toString())
+            } else {
+                _favoritesPresenter.delFavorite(title.text.toString())
+            }
+
+        }
+
     }
 
     init {

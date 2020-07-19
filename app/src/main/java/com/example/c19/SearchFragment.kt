@@ -4,8 +4,6 @@ import UICard.CardFragmentPageAdapter
 import UICard.CardPageAdapter
 import UICard.ShadowTransformer
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,14 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.c19.model.CovidManager
 import com.example.c19.presenter.HomePresenterImpl
-import com.example.c19.presenter.SearchPresenter
 import com.example.c19.presenter.SearchPresenterImpl
 import com.example.c19.view.HomeView
 import com.example.c19.view.SearchView
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
-import java.util.*
-import kotlin.collections.Map as Map1
+import kotlinx.android.synthetic.main.card.*
 
 /**
  * This Fragment is responsible for getting a country or state input from the user and
@@ -50,7 +44,7 @@ class SearchFragment : Fragment(), View.OnClickListener, SearchView {
         val view : View = inflater.inflate(R.layout.fragment_search, container, false)
 
         _viewPager = view.findViewById(R.id.cardSearchViewPager)
-        _cardAdapter = CardPageAdapter()
+        _cardAdapter = CardPageAdapter(_searchPresenter)
         _FragmentCardAdapter = CardFragmentPageAdapter(
             fragmentManager,
             dpToPixels(2, this)
@@ -72,16 +66,58 @@ class SearchFragment : Fragment(), View.OnClickListener, SearchView {
     override fun onClick(v: View?) {
 
         val inputResult = view?.findViewById<EditText>(R.id.searchInputBar)
-        val result = inputResult?.text.toString()
+        val nameResult = inputResult?.text.toString()
 
-        _searchPresenter.getEntity(result)
+        _searchPresenter.getEntity(nameResult)
 
-        Log.i("Input Test", result)
+        Log.i("Input Test", nameResult)
+
+
 
 
 
 
     }
+
+    /**
+     * This function is responsible for controlling the favorite button of cards, and adding the
+     * cards to the Home Fragment.
+     *
+     * @author Chase Moses
+     */
+    private fun toggleFavoriteButton(entityName : String) {
+        val toggleButton = view?.findViewById<ToggleButton>(R.id.btnToggleFavorite)
+
+        toggleButton?.setOnCheckedChangeListener { _, isChecked ->
+           // Listen for when the ToggleButton is tapped
+            if (isChecked) {
+                // First check to see if the card is already a favorite.
+                if(_searchPresenter.isFavorite(entityName)) {
+                    // Tell user it is already a favorite
+                    Toast.makeText(activity?.applicationContext, "This Card is already a favorite", Toast.LENGTH_SHORT)
+                        .show()
+                    // Turn the button off
+                    toggleButton.toggle()
+                } else { // If it is not already a part of the favorite list, add it.
+                    _searchPresenter.addFavorite(entityName)
+                    Log.i("Favorite Button", toggleButton.isChecked.toString())
+                    // tell the user it has been added to the favorite list
+                    Toast.makeText(activity?.applicationContext, "Added to Favorites", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } else {
+                // If the button was tapped by mistake, they can tap it again to remove the card.
+                _searchPresenter.delFavorite(entityName)
+                // Tell user it has been removed from the list
+                Toast.makeText(activity?.applicationContext, "Removed from Favorites", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+
+
+    }
+
     companion object {
         fun dpToPixels(dp: Int, context: SearchFragment): Float {
             return dp * context.resources.displayMetrics.density
@@ -90,9 +126,21 @@ class SearchFragment : Fragment(), View.OnClickListener, SearchView {
 
     }
 
-    override fun drawCard(entityMap : kotlin.collections.Map<String, Any?>) {
-        _cardAdapter!!.addCardItem(entityMap)
-        _cardAdapter!!.notifyDataSetChanged()
+    override fun drawCard(entityMap : kotlin.collections.Map<String, Any?>, entityName: String) {
+        if (entityMap.isNotEmpty()) {
+            _cardAdapter!!.addCardItem(entityMap)
+            _cardAdapter!!.notifyDataSetChanged()
+        }
+    }
+
+    override fun showAdded(name: String) {
+        Toast.makeText(activity?.applicationContext, "$name added to Favorites", Toast.LENGTH_SHORT)
+            .show()
+    }
+
+    override fun showDeleted(name: String) {
+        Toast.makeText(activity?.applicationContext, "$name removed from Favorites", Toast.LENGTH_SHORT)
+            .show()
     }
 
 }

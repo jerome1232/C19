@@ -69,6 +69,50 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
         }
     }
 
+    fun getEntity(entityName : String) : CovidEntity? {
+
+        val entity : CovidEntity? = _covidStateManager.getEntity(entityName)
+
+        return entity
+    }
+
+    /**
+     * Adds a favorite to favorites list
+     *
+     * @author Jeremy D. Jones
+     * @param name
+     */
+    override fun addFavorite(name: String) {
+    }
+
+    /**
+     * Checks whether something is a favorite or not
+     *
+     * @author Jeremy D. Jones
+     * @param name
+     * @return
+     */
+    override fun isFavorite(name: String) : Boolean {
+        return _covidStateManager.isFavorite(name)
+    }
+
+    /**
+     * Removes a favorite from the favorite list
+     *
+     * @author Jeremy D. Jones
+     * @param name
+     */
+    override fun delFavorite(name: String) {
+        doAsync {
+            _covidStateManager.delFavorite(name)
+            uiThread {
+                _homeView.removeFavorite(name)
+            }
+        }
+
+
+    }
+
     private fun unixTimeStampToString(unixTimeStamp: Long): String {
         val df = Date(unixTimeStamp)
         return SimpleDateFormat("yyyy-dd-MM").format(df)

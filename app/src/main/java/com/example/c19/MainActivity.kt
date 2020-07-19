@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.c19.model.*
+import com.example.c19.presenter.HomePresenter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
@@ -75,7 +76,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Needed for GPS data
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        val toggleButton = findViewById<ToggleButton>(R.id.btnToggleFavorite)
+
     }
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
@@ -158,8 +159,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      * @param view
      */
     fun searchFragGps(view: View) {
-        val name = gpsRequest()
-        searchInputBar.setText(name)
+        val name = gpsRequest(searchInputBar)
     }
 
     /**
@@ -168,10 +168,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      *
      * @author Jeremy D. Jones
      */
-    fun gpsRequest() : String {
+    fun gpsRequest(inputBar: EditText) {
         val TAG = "gpsRequest"
         val RECORD_REQUEST_CODE = 101
-        val searchInputBar = findViewById<EditText>(R.id.searchInputBar)
 
         // Checking to see if we have permission to use location services.
         if (ActivityCompat.checkSelfPermission(
@@ -184,7 +183,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
                 RECORD_REQUEST_CODE
             )
-            return ""
+            Log.i("gps", "Permission Denied")
+            return
         }
         // requesting the last known location
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
@@ -199,13 +199,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
                 loc = addresses.get(0).countryName
                 if (loc == "United States") loc = addresses.get(0).adminArea
-                Log.i("gpsrequest01", loc)
+                Log.i("gpsrequest", loc)
+                inputBar.setText(loc)
             } else {
                 Toast.makeText(this, "No location data", Toast.LENGTH_SHORT).show()
             }
         }
-        Log.i("GPSRequest", loc)
-        return loc
     }
 
 
