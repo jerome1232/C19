@@ -23,7 +23,6 @@ import org.jetbrains.anko.uiThread
 
 class HomeFragment : Fragment(), HomeView {
 
-    // TODO: Make favorite button always on for those cards in the favorite list.
 
     private val _homePresenter = HomePresenterImpl(CovidManager(), this)
     private var _viewPager: ViewPager? = null
