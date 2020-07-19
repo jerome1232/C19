@@ -83,7 +83,6 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
      * @param name
      */
     override fun addFavorite(name: String) {
-        _covidStateManager.addFavorite(name)
     }
 
     /**
@@ -104,7 +103,14 @@ class HomePresenterImpl(covidManager: CovidManager, homeView: HomeView) : HomePr
      * @param name
      */
     override fun delFavorite(name: String) {
-        _covidStateManager.delFavorite(name)
+        doAsync {
+            _covidStateManager.delFavorite(name)
+            uiThread {
+                _homeView.removeFavorite(name)
+            }
+        }
+
+
     }
 
     private fun unixTimeStampToString(unixTimeStamp: Long): String {

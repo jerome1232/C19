@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
@@ -71,5 +72,12 @@ class HomeFragment : Fragment(), HomeView {
                 favorite ->  _cardAdapter!!.addCardItem(favorite)
         }
         _cardAdapter!!.notifyDataSetChanged()
+    }
+
+    override fun removeFavorite(name: String) {
+        _cardAdapter!!.removeCardItem(name)
+        _cardAdapter!!.notifyDataSetChanged()
+        Toast.makeText(activity?.applicationContext, "$name removed from Favorites", Toast.LENGTH_SHORT)
+            .show()
     }
 }

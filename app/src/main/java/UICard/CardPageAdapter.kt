@@ -29,6 +29,14 @@ class CardPageAdapter(favoritesPresenter: FavoritesPresenter) : PagerAdapter(), 
 
     }
 
+    fun removeCardItem(name: String) {
+        cards.removeAll { card -> card["title"] == name }
+    }
+
+    override fun getItemPosition(`object`: Any): Int {
+        return POSITION_NONE
+    }
+
     override fun getBaseElevation(): Float {
         return mBaseElevation
     }
